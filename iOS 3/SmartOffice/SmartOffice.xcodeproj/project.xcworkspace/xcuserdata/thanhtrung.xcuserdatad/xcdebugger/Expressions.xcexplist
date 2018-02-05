@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VariablesViewState
+   version = "1.0">
+   <ContextStates>
+      <ContextState
+         contextName = "-[SendBillViewController viewDidLoad]:SendBillViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.navigationViewController">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[PMTC_DetailAttached_VC reloadTableViewWithSearchText:]:PMTC_DetailAttached_VC.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "documentList">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[SendBillViewController showCamera]:SendBillViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.navigationController">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[PMTC_DetailAttached_VC setupUI]:PMTC_DetailAttached_VC.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "LocalizedString(@&quot;PMTC_SEARCH_BY_NAME_AND_MORE&quot;)">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[SendBillViewController sendInvoiceAction:]:SendBillViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.navigationController">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[MoreVC tableView:didSelectRowAtIndexPath:]:MoreVC.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.navigationController">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+   </ContextStates>
+</VariablesViewState>
