@@ -94,7 +94,7 @@
     self.listProperty.delegate = self;
     self.listProperty.searchview.delegate = self;
     self.listProperty.searchview.searchBar.placeholder = LocalizedString(@"SearchSerial..");
-    
+    self.listProperty.searchview.searchBar.font = [UIFont italicSystemFontOfSize:14.0f];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -294,7 +294,7 @@
 {
     NSArray *contentFilter = @[];
     if (_switchScreen == 0) {
-        contentFilter = @[@"Tất cả", @"Hỏng", @"Mất", @"Không sử dụng"];
+        contentFilter = @[@"-Tất cả-", @"Hỏng", @"Mất", @"Không sử dụng"];
         ContentFilterVC *filterVC = [[ContentFilterVC alloc] initWithFilterSelected:_filterTypeTTTS content:contentFilter];
         filterVC.preferredContentSize = CGSizeMake(240, contentFilter.count*44);
         filterVC.delegate = self;
@@ -311,7 +311,7 @@
                                          animated:YES
                                           options:WYPopoverAnimationOptionFadeWithScale];
     } else {
-        contentFilter = @[@"Tất cả", @"Đã xác nhận", @"Đã từ chối", @"Đã bàn giao"];
+        contentFilter = @[@"-Tất cả-", @"Đã xác nhận", @"Đã từ chối", @"Đã bàn giao"];
         ContentFilterVC *filterVC = [[ContentFilterVC alloc] initWithFilterSelected:_filterTypeBBBG content:contentFilter];
         filterVC.preferredContentSize = CGSizeMake(240, contentFilter.count*44);
         filterVC.delegate = self;
@@ -497,6 +497,7 @@
             self.propertyDetail.hidden = NO;
             self.contentBBBG.hidden = YES;
             self.listProperty.searchview.searchBar.placeholder = LocalizedString(@"SearchSerial..");
+            self.listProperty.searchview.searchBar.font = [UIFont italicSystemFontOfSize:14.0f];
         }
             break;
             
@@ -508,6 +509,7 @@
             self.propertyDetail.hidden = YES;
             self.contentBBBG.hidden = NO;
             self.listProperty.searchview.searchBar.placeholder = LocalizedString(@"SearchCodeBBBG..");
+            self.listProperty.searchview.searchBar.font = [UIFont italicSystemFontOfSize:14.0f];
         }
         default:
             break;

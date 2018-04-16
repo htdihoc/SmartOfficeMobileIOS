@@ -54,6 +54,7 @@
     
     self.searchview.delegate = self;
     self.searchview.searchBar.placeholder = LocalizedString(@"SearchSerial...");
+    self.searchview.searchBar.font = [UIFont italicSystemFontOfSize:14.0f];
     self.noResultLabel.hidden = YES;
     
     self.startTTTS = 0;
@@ -280,12 +281,12 @@
     NSArray *contentFilter = @[];
     switch (self.switchScreen) {
         case 0: {
-            contentFilter = @[@"Tất cả", @"Hỏng", @"Mất", @"Không sử dụng"];
+            contentFilter = @[@"-Tất cả-", @"Hỏng", @"Mất", @"Không sử dụng"];
             filterViewController = [[ContentFilterVC alloc] initWithFilterSelected:_filterTypeTTTS content:contentFilter];
         }
             break;
         case 1: {
-            contentFilter = @[@"Tất cả", @"Chưa xác nhận", @"Đã xác nhận", @"Bị từ chối"];
+            contentFilter = @[@"-Tất cả-", @"Đã xác nhận", @"Chưa xác nhận", @"Bị từ chối"];
             filterViewController = [[ContentFilterVC alloc] initWithFilterSelected:_filterTypeBBBG content:contentFilter];
         }
             break;
@@ -698,6 +699,7 @@
         {
             self.switchScreen = 0;
             self.searchview.searchBar.placeholder = LocalizedString(@"SearchSerial...");
+            self.searchview.searchBar.font = [UIFont italicSystemFontOfSize:14.0f];
             if (_isFiltered) {
                 self.total_record.text = IntToString(self.data_FilterTTTS.count);
                 if (self.data_FilterTTTS.count > 0) {
@@ -727,6 +729,7 @@
         {
             self.switchScreen = 1;
             self.searchview.searchBar.placeholder = LocalizedString(@"SearchCodeBBBG");
+            self.searchview.searchBar.font = [UIFont italicSystemFontOfSize:14.0f];
             if (_isFiltered) {
                 self.total_record.text = IntToString(self.data_FilterBBBG.count);
                 if (self.data_FilterBBBG.count > 0) {

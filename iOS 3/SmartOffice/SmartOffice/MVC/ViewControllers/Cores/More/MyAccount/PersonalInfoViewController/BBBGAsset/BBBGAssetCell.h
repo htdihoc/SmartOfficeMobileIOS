@@ -21,6 +21,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *value_number;
 @property (weak, nonatomic) IBOutlet UILabel *value_serial;
 @property (weak, nonatomic) IBOutlet UILabel *value_status;
-
+@property (weak, nonatomic) IBOutlet UILabel *heightStatusConstrain;
 
 @end

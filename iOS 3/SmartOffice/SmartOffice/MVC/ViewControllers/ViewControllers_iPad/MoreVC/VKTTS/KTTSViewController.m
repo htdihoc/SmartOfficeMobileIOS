@@ -76,6 +76,7 @@
     self.isloadmoreBBBG = true;
     self.search_view.searchBar.placeholder = LocalizedString(@"SearchSerial...");
     self.detailSearchView.searchBar.placeholder = LocalizedString(@"SearchSerial.");
+    self.detailSearchView.searchBar.font = [UIFont italicSystemFontOfSize:14.0f];
     self.kttsTableView.rowHeight = UITableViewAutomaticDimension;
     self.kttsTableView.estimatedRowHeight = 180;
     self.detailKTTSTableView.rowHeight = UITableViewAutomaticDimension;
@@ -834,12 +835,12 @@
     NSArray *contentFilter = @[];
     switch (_Screen) {
         case 0: {
-            contentFilter = @[@"Tất cả", @"Hỏng", @"Mất", @"Không sử dụng"];
+            contentFilter = @[@"-Tất cả-", @"Hỏng", @"Mất", @"Không sử dụng"];
             filterViewController = [[ContentFilterVC alloc] initWithFilterSelected:_filterTypeTTTS content:contentFilter];
         }
             break;
         case 1: {
-            contentFilter = @[@"Tất cả", @"Chưa xác nhận", @"Đã xác nhận", @"Bị từ chối"];
+            contentFilter = @[@"-Tất cả-", @"Đã xác nhận", @"Chưa xác nhận", @"Bị từ chối"];
             filterViewController = [[ContentFilterVC alloc] initWithFilterSelected:_filterTypeBBBG content:contentFilter];
         }
             break;

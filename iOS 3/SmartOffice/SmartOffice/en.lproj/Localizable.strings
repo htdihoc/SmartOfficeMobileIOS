@@ -44,8 +44,8 @@
 "SearchSerial..." = "Tìm kiếm theo mã serial, tên hàng hóa...";
 "SearchSerial.." = "Tìm kiếm theo mã serial, tên tài sản, mã trạm...";
 "SearchSerial." = "Tìm kiếm theo mã serial, tên tài sản...";
-"SearchCodeBBBG.." = "Mã BBBG";
-"SearchCodeBBBG" = "Mã BBBG";
+"SearchCodeBBBG.." = "Tìm kiếm theo mã BBBG";
+"SearchCodeBBBG" = "Tìm kiếm theo mã BBBG";
 "KMORE_SCR_MY_ACCOUNT"              =   "My Account";
 "KMORE_SCR_SETTING"                 =   "Setting";
 "KMORE_SCR_REMINDER"                =   "Reminder";

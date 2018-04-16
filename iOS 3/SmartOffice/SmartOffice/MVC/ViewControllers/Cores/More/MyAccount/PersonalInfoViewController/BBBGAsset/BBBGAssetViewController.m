@@ -35,6 +35,7 @@
     self.limit = 20;
     
     self.search_view.searchBar.placeholder = LocalizedString(@"SearchSerial...");
+    self.search_view.searchBar.font = [UIFont italicSystemFontOfSize:14.0f];
     
     self.nameBBBG1.text = self.bbbgModelAsset.minuteHandOverCode;
     self.nameBBBG2.text = self.bbbgModelAsset.minuteHandOverCode;
@@ -53,6 +54,7 @@
             // đã xác nhận
             self.height_button_view.constant = 0;
             self.height_refuse_view.constant = 0;
+            self.refuse_view.hidden = YES;
             self.statusBBBG2.text = @"Trạng thái : Đã xác nhận";
         }
             break;
@@ -71,7 +73,7 @@
     
     self.BBBG_data_array = [NSMutableArray new];
     self.data_BBBG = [NSMutableArray new];
-    self.backTitle = @"BBBG tài sản";
+    self.backTitle = @"BBBG Tài sản";
     self.BBBGAssetTableView.estimatedRowHeight = 190;
     self.BBBGAssetTableView.rowHeight = UITableViewAutomaticDimension;
     
@@ -177,9 +179,14 @@
         NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"BBBGAssetCell" owner:self options:nil];
         bbbgCell = [nib objectAtIndex:0];
     }
-    bbbgCell.view_cell_number.text = IntToString(indexPath.row+1);
+    if(indexPath.row+1 < 10){
+        bbbgCell.view_cell_number.text = [NSString stringWithFormat:@"0%@", IntToString(indexPath.row+1)];
+    }else {
+        bbbgCell.view_cell_number.text = IntToString(indexPath.row+1);
+    }
+    
     bbbgCell.value_goods_name.text = detailBBBGModel.catMerName;
-    bbbgCell.value_number.text = IntToString(detailBBBGModel.count);
+    bbbgCell.value_number.text = [NSString stringWithFormat:@"%@.0", IntToString(detailBBBGModel.count)];;
     bbbgCell.value_serial.text = detailBBBGModel.serialNumber;
     
     switch (detailBBBGModel.stt) {

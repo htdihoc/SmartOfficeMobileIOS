@@ -16,6 +16,8 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *height_refuse_view;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *height_button_view;
 
+@property (weak, nonatomic) IBOutlet UIView *refuse_view;
+
 @property (weak, nonatomic) IBOutlet SOSearchBarView *search_view;
 @property (strong, nonatomic) NSString *id_BBBG_detail;
 @property (assign, nonatomic) NSInteger isStatus;

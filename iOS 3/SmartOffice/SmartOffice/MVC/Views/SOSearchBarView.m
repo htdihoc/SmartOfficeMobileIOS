@@ -43,7 +43,7 @@
     [[NSAttributedString alloc] initWithString:placeHolder
                                     attributes:@{
                                                  NSForegroundColorAttributeName: color,
-                                                 NSFontAttributeName : [UIFont fontWithName:@"HelveticaNeue-Italic" size:15]
+                                                 NSFontAttributeName : [UIFont italicSystemFontOfSize:14.0f]
                                                  }
      ];
     self.searchBar.placeholder = placeHolder;

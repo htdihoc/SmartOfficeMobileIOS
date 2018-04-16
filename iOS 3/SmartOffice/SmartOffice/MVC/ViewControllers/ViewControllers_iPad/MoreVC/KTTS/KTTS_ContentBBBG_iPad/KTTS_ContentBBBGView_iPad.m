@@ -28,6 +28,7 @@
     self.bottomView.layer.borderColor                   = AppColor_BorderForView.CGColor;
     
     self.searchview.searchBar.placeholder = @"Tìm kiếm theo mã serial, tên tài sản...";
+    self.searchview.searchBar.font = [UIFont italicSystemFontOfSize:14.0f];
     
     [self.btn_confirm setTitleColor: [UIColor whiteColor] forState:UIControlStateNormal];
     self.btn_confirm.backgroundColor                    = RGB(14, 133, 188);

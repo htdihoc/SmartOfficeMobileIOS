@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13174"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -218,6 +218,7 @@
                         <outlet property="nameBBBG1" destination="Gec-ca-1yw" id="eDo-0Q-Q1X"/>
                         <outlet property="nameBBBG2" destination="ZMg-gF-kxd" id="IMJ-xj-EK0"/>
                         <outlet property="reasonBBBG2" destination="2Jo-4Z-AXE" id="9NF-Rh-LXk"/>
+                        <outlet property="refuse_view" destination="3cZ-Z7-Ouy" id="AjX-uo-mhe"/>
                         <outlet property="search_view" destination="azz-9x-x7a" id="cok-Hg-1g0"/>
                         <outlet property="statusBBBG2" destination="Euh-Qb-ohN" id="gZM-lN-Rwd"/>
                         <outlet property="total_record" destination="uBb-kl-OIp" id="ZyS-nE-JlF"/>
