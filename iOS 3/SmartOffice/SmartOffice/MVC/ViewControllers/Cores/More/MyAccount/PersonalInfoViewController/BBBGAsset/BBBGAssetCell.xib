@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="HelveticaNeue.ttc">
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue-Bold</string>
+        </array>
+    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -203,6 +209,9 @@
             </tableViewCellContentView>
             <connections>
                 <outlet property="btn_view_detail" destination="y1h-NX-j0O" id="RN2-G5-N4Z"/>
+                <outlet property="cellNumberView" destination="oxF-mT-aQh" id="1mG-1N-9hv"/>
+                <outlet property="heightTitleStatusConstrain" destination="Ec0-rB-UKq" id="l9g-hY-a5T"/>
+                <outlet property="heightValueStatusConstrain" destination="cdh-7M-l9F" id="rto-N1-kr4"/>
                 <outlet property="title_goods_name" destination="IEf-Ir-V2p" id="Is9-Kd-J84"/>
                 <outlet property="title_number" destination="0Tw-oF-3qn" id="lbf-Zg-r4b"/>
                 <outlet property="title_serial" destination="XRo-iH-Nhb" id="eqK-l4-fyW"/>

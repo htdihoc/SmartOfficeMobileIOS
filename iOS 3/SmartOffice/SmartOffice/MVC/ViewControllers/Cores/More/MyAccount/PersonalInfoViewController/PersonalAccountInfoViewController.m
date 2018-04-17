@@ -89,6 +89,8 @@
     [[Common shareInstance] showCustomHudInView:self.view];
     [self reloadAllData];
     
+    [self.dataBBBGArr removeAllObjects];
+    
     NSDictionary *parameter = @{
                                 @"employeeId": @"102026",
                                 @"start": IntToString(self.startBBBG),
@@ -340,10 +342,10 @@
                     [self searchlocalwith:@""];
                     break;
                 case 1:
-                    [self filterStatus:IntToString(0)];
+                    [self filterStatus:IntToString(1)];
                     break;
                 case 2:
-                    [self filterStatus:IntToString(1)];
+                    [self filterStatus:IntToString(0)];
                     break;
                 case 3:
                     [self filterStatus:IntToString(2)];
@@ -373,14 +375,28 @@
 
 - (void) donotInternet {
     soErrorView.hidden = NO;
-    self.infoAssetsTableView.hidden = NO;
-    self.bbbgAssetsTableView.hidden = NO;
+    self.infoAssetsTableView.hidden = YES;
+    self.bbbgAssetsTableView.hidden = YES;
+    self.scrollView.hidden = YES;
     [[Common shareInstance] dismissCustomHUD];
-    [[Common shareInstance] showErrorHUDWithMessage:@"Mất kết nối mạng" inView: self.contentview];
+//    [[Common shareInstance] showErrorHUDWithMessage:@"Mất kết nối mạng" inView: self.contentview];
 }
 
 - (void) didRefreshOnErrorView:(SOErrorView *)errorView {
-    [self reloadAllData];
+    
+    if ([Common checkNetworkAvaiable]) {
+        soErrorView.hidden = YES;
+        self.infoAssetsTableView.hidden = NO;
+        self.bbbgAssetsTableView.hidden = NO;
+        self.scrollView.hidden = NO;
+        [self reloadAllData];
+    }else{
+        soErrorView.hidden = NO;
+        self.infoAssetsTableView.hidden = YES;
+        self.bbbgAssetsTableView.hidden = YES;
+        self.scrollView.hidden = YES;
+        [[Common shareInstance] dismissCustomHUD];
+    }
 }
 
 - (void) reloadAllData {
@@ -407,6 +423,30 @@
 }
 
 - (void) countDataBBBG {
+    //Get bag value
+    [self.dataBBBGArr removeAllObjects];
+    NSDictionary *parameters = @{
+                                @"employeeId": @"102026",
+                                @"start": IntToString(self.startBBBG),
+                                @"keyword": self.searchview.text,
+                                @"limit": IntToString(1000)
+                                };
+    [KTTSProcessor postKTTS_BBBG:parameters handle:^(id result, NSString *error) {
+        NSArray *array = result[@"listMinuteHandOver"];
+        
+        [self.dataBBBGArr addObjectsFromArray:array];
+        NSPredicate *p = [NSPredicate predicateWithFormat:@"status = %d", 0];
+        self.filterDataBBBGArr = [self.dataBBBGArr filteredArrayUsingPredicate:p];
+        self.label_Badge.text = [NSString stringWithFormat:@"%lu", (unsigned long)self.filterDataBBBGArr.count];
+        if(self.filterDataBBBGArr.count == 0){
+            self.label_Badge.hidden = YES;
+        }else {
+            self.label_Badge.hidden = NO;
+        }
+    } onError:^(NSString *Error) {
+    } onException:^(NSString *Exception) {
+    }];
+    
     //    [[Common shareInstance] showCustomHudInView:self.view];
     NSDictionary *parameter = @{
                                 @"employeeId": @"102026",
@@ -445,7 +485,12 @@
                 [self.TTTS_data_array addObjectsFromArray:array];
             }
         }
-        
+
+        if (_isFiltered) {
+            self.countTTTS = self.data_TTTS.count;
+        } else {
+            
+        }
         if (self.switchScreen == 0) {
             self.total_record.text = IntToString(self.countTTTS);
             if (self.countTTTS > 0) {
@@ -484,7 +529,12 @@
                 [self.BBBG_data_array addObjectsFromArray:array];
             }
         }
-        
+        if (_isFiltered) {
+            self.countBBBG = self.data_BBBG.count;
+        } else {
+            
+        }
+
         if (self.switchScreen == 1) {
             self.total_record.text = IntToString(self.countBBBG);
             if (self.countBBBG > 0) {
@@ -596,7 +646,7 @@
                 break;
             case 2:
             {
-                personalAccInfoCell.lb_status.text = @"Bị từ chối";
+                personalAccInfoCell.lb_status.text = @"Từ chối";
                 personalAccInfoCell.lb_status.textColor = RGB(254, 8, 8);
             }
                 break;
@@ -648,19 +698,21 @@
                 //                [self.TTTS_data_array removeAllObjects];
                 if(self.startTTTS < self.countTTTS){
                     [self countDataTTTS];
+                    [self.infoAssetsTableView reloadData];
                 }
                 break;
             case 1:
                 //                [self.BBBG_data_array removeAllObjects];
                 if(self.startBBBG < self.countBBBG){
                     [self countDataBBBG];
+                    [self.bbbgAssetsTableView reloadData];
                 }
                 break;
             default:
                 break;
         }
-        [self.infoAssetsTableView reloadData];
-        [self.bbbgAssetsTableView reloadData];
+        
+        
     }
 }
 
@@ -786,7 +838,9 @@
             NSDate *date_asset_type = [NSDate dateWithTimeIntervalSince1970: (propertyinfo.minuteHandOverDate/1000)];
             NSDateFormatter *format_asset_type = [NSDateFormatter new];
             [format_asset_type setDateFormat: @"dd/MM/yyyy"];
-            propertyDetails.value_expiry_date = [format_asset_type stringFromDate:date_asset_type];
+//            propertyDetails.value_expiry_date = [format_asset_type stringFromDate:date_asset_type];
+            
+            propertyDetails.value_expiry_date = [NSString stringWithFormat:@"%d", (propertyinfo.minuteHandOverDate / 2592000)];
             
             propertyDetails.value_asset_type = propertyinfo.stationCode;
             

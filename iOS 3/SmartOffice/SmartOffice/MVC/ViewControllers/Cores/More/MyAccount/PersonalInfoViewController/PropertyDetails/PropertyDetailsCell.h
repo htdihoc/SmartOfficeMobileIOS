@@ -22,5 +22,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *value_use_time;
 @property (weak, nonatomic) IBOutlet UILabel *value_price;
 @property (weak, nonatomic) IBOutlet UILabel *value_status;
+@property (weak, nonatomic) IBOutlet UILabel *tittleStatusLabel;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *heightStatusConstrain;
 
 @end

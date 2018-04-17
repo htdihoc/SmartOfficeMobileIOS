@@ -419,7 +419,7 @@
                     }
                         break;
                     case 2: {
-                        kttsCell.value_status.text = @"Bị từ chối";
+                        kttsCell.value_status.text = @"Từ chối";
                         kttsCell.value_status.textColor = RGB(254, 8, 8);
                     }
                         break;
@@ -893,10 +893,10 @@
                     [self reloadBBBG];
                     break;
                 case 1:
-                    [self filterStatus:IntToString(0)];
+                    [self filterStatus:IntToString(1)];
                     break;
                 case 2:
-                    [self filterStatus:IntToString(1)];
+                    [self filterStatus:IntToString(0)];
                     break;
                 case 3:
                     [self filterStatus:IntToString(2)];

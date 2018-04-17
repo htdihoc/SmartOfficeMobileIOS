@@ -180,8 +180,8 @@ static char UIScrollViewPullToRefreshView;
         self.state = SVPullToRefreshStateStopped;
         self.showsDateLabel = NO;
         
-        self.titles = [NSMutableArray arrayWithObjects:NSLocalizedString(@"Pull to refresh...",),
-                             NSLocalizedString(@"Release to refresh...",),
+        self.titles = [NSMutableArray arrayWithObjects:NSLocalizedString(@"Vuốt lên để cập nhật",),
+                             NSLocalizedString(@"Vuốt xuống để cập nhật",),
                              NSLocalizedString(@"Loading...",),
                                 nil];
         
@@ -467,7 +467,7 @@ static char UIScrollViewPullToRefreshView;
 - (UILabel *)titleLabel {
     if(!_titleLabel) {
         _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 210, 20)];
-        _titleLabel.text = NSLocalizedString(@"Pull to refresh...",);
+        _titleLabel.text = NSLocalizedString(@"Vuốt lên để cập nhật",);
         _titleLabel.font = [UIFont boldSystemFontOfSize:14];
         _titleLabel.backgroundColor = [UIColor clearColor];
         _titleLabel.textColor = textColor;

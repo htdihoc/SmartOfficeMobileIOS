@@ -27,6 +27,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *nameBBBG2;
 @property (weak, nonatomic) IBOutlet UILabel *statusBBBG2;
 @property (weak, nonatomic) IBOutlet UILabel *reasonBBBG2;
-
+@property (weak, nonatomic) IBOutlet UIButton *confirmBtn;
 @end
 

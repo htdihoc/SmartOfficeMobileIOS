@@ -86,15 +86,34 @@ typedef NS_ENUM(NSInteger, Status) {
     cell.value_commodity_code.text = self.value_commodity_code;
     cell.value_commodity_name.text = self.value_commodity_name;
     cell.value_unit.text = self.value_unit;
-    cell.value_number.text = self.value_number;
+    cell.value_number.text = [NSString stringWithFormat:@"%@.0", self.value_number];
     cell.value_serial.text = self.value_serial;
     cell.value_manufacturer.text = self.value_manufacturer;
     cell.value_aspect.text = self.value_aspect;
-    cell.value_expiry_date.text = self.value_expiry_date;
+    cell.value_expiry_date.text = [NSString stringWithFormat:@"%@ tháng", self.value_expiry_date];
     cell.value_asset_type.text = self.value_asset_type;
     cell.value_use_time.text = self.value_use_time;
     cell.value_price.text = self.value_price;
-    cell.value_status.text = self.value_status;
+    
+    
+    if (self.typeKTTS == 1) {
+        cell.tittleStatusLabel.hidden = NO;
+        cell.value_status.hidden = NO;
+        cell.heightStatusConstrain.constant = 22;
+        cell.tittleStatusLabel.text = @"Mã trạm";
+        cell.value_status.text = self.value_asset_type;
+    } else {
+        if(self.stt == 0){
+            cell.tittleStatusLabel.hidden = YES;
+            cell.value_status.hidden = YES;
+            cell.heightStatusConstrain.constant = 0;
+        }else {
+            cell.tittleStatusLabel.hidden = NO;
+            cell.value_status.hidden = NO;
+            cell.heightStatusConstrain.constant = 22;
+            cell.value_status.text = self.value_status;
+        }
+    }
     
     cell.selectionStyle = UIAccessibilityTraitNone;
     return cell;

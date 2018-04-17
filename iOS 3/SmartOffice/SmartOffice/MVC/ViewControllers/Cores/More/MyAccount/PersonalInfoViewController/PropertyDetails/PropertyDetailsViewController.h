@@ -30,6 +30,8 @@
 @property (assign, nonatomic) NSInteger count;
 @property (assign, nonatomic) NSInteger typeKTTS;
 
+@property (assign ,nonatomic) NSInteger stt;
+
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *hightBtnCancelOrConfirm;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *hightBtnCancel;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *hightBtnConfirm;

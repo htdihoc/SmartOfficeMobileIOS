@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13174"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -82,7 +82,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
-                                <color key="backgroundColor" red="0.95686274510000002" green="0.52549019610000003" blue="0.52549019610000003" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="1" green="0.50196078431372548" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstItem="ZMg-gF-kxd" firstAttribute="top" secondItem="3cZ-Z7-Ouy" secondAttribute="top" constant="5" id="0jQ-TZ-oQ7"/>
                                     <constraint firstItem="2Jo-4Z-AXE" firstAttribute="leading" secondItem="3cZ-Z7-Ouy" secondAttribute="leading" constant="20" id="28J-h3-M9f"/>
@@ -212,6 +212,7 @@
                     </view>
                     <connections>
                         <outlet property="BBBGAssetTableView" destination="soz-0V-JTF" id="INk-ei-Da4"/>
+                        <outlet property="confirmBtn" destination="9li-sl-4qM" id="1xG-lf-Uj0"/>
                         <outlet property="height_asset_name_view" destination="XGa-zi-pi4" id="BtY-h2-0z2"/>
                         <outlet property="height_button_view" destination="dOw-5E-BIW" id="c8f-uV-5O0"/>
                         <outlet property="height_refuse_view" destination="NR4-MS-JvS" id="RFb-92-9X5"/>

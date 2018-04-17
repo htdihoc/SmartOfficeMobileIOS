@@ -39,7 +39,6 @@
     
     self.nameBBBG1.text = self.bbbgModelAsset.minuteHandOverCode;
     self.nameBBBG2.text = self.bbbgModelAsset.minuteHandOverCode;
-    self.reasonBBBG2.text = [NSString stringWithFormat:@"Lý do : %@", self.bbbgModelAsset.description];
     
     switch (self.isStatus) {
         case 0:
@@ -47,6 +46,8 @@
             // đã bàn giao, chưa xác nhận
             self.height_asset_name_view.constant = 0;
             self.statusBBBG2.text = @"Trạng thái : Đã bàn giao, chưa xác nhận";
+            self.reasonBBBG2.hidden = YES;
+            [self.confirmBtn setTitle:@"Xác nhận" forState:UIControlStateNormal];
         }
             break;
         case 1:
@@ -56,6 +57,9 @@
             self.height_refuse_view.constant = 0;
             self.refuse_view.hidden = YES;
             self.statusBBBG2.text = @"Trạng thái : Đã xác nhận";
+            self.reasonBBBG2.text = [NSString stringWithFormat:@"Lý do : %@", self.bbbgModelAsset.description];
+            self.reasonBBBG2.hidden = NO;
+            [self.confirmBtn setTitle:@"Phê duyệt" forState:UIControlStateNormal];
         }
             break;
         case 2:
@@ -64,6 +68,9 @@
             self.height_button_view.constant = 0;
             self.height_asset_name_view.constant = 0;
             self.statusBBBG2.text = @"Trạng thái : Bị từ chối";
+            self.reasonBBBG2.text = [NSString stringWithFormat:@"Lý do : %@", self.bbbgModelAsset.description];
+            self.reasonBBBG2.hidden = NO;
+            [self.confirmBtn setTitle:@"Phê duyệt" forState:UIControlStateNormal];
         }
             break;
         default:
@@ -194,23 +201,40 @@
         {
             bbbgCell.value_status.text = @"Chưa xác nhận";
             bbbgCell.value_status.textColor = RGB(254, 94, 8);
+            bbbgCell.value_status.hidden = YES;
+            bbbgCell.value_status.hidden = YES;
+            bbbgCell.heightTitleStatusConstrain.constant = 0;
+            bbbgCell.heightValueStatusConstrain.constant = 0;
+            
         }
             break;
         case 1:
         {
             bbbgCell.value_status.text = @"Đã xác nhận";
             bbbgCell.value_status.textColor = RGB(2, 127, 185);
+            bbbgCell.value_status.hidden = NO;
+            bbbgCell.value_status.hidden = NO;
+            bbbgCell.heightTitleStatusConstrain.constant = 22;
+            bbbgCell.heightValueStatusConstrain.constant = 22;
         }
             break;
         case 2:
         {
             bbbgCell.value_status.text = @"Bị từ chối";
             bbbgCell.value_status.textColor = RGB(254, 8, 8);
+            bbbgCell.value_status.hidden = NO;
+            bbbgCell.value_status.hidden = NO;
+            bbbgCell.heightTitleStatusConstrain.constant = 22;
+            bbbgCell.heightValueStatusConstrain.constant = 22;
         }
             break;
         default:
         {
             bbbgCell.value_status.text = @"Không xác định";
+            bbbgCell.value_status.hidden = NO;
+            bbbgCell.value_status.hidden = NO;
+            bbbgCell.heightTitleStatusConstrain.constant = 22;
+            bbbgCell.heightValueStatusConstrain.constant = 22;
         }
             break;
     }
@@ -251,11 +275,14 @@
     propertyDetails.value_manufacturer = detailBBBGModel.companyName;
     propertyDetails.value_aspect = detailBBBGModel.statusName;
     propertyDetails.merEntityId = detailBBBGModel.merEntityId;
+    propertyDetails.stt = detailBBBGModel.stt;
     
     NSDate *date_1 = [NSDate dateWithTimeIntervalSince1970: (detailBBBGModel.minuteHandOverDate/1000)];
     NSDateFormatter *format_1 = [NSDateFormatter new];
     [format_1 setDateFormat: @"dd/MM/yyyy"];
     propertyDetails.value_expiry_date = [format_1 stringFromDate:date_1];
+
+    propertyDetails.value_expiry_date = [NSString stringWithFormat:@"%d", (detailBBBGModel.minuteHandOverDate / 2592000)];
     
     propertyDetails.value_asset_type = detailBBBGModel.stationCode;
     
