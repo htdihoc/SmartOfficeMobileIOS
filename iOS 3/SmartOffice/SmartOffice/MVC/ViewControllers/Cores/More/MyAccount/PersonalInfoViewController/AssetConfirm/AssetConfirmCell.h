@@ -11,7 +11,7 @@
 
 @interface AssetConfirmCell : UITableViewCell
 
-@property (strong, nonatomic) IBOutlet KPDropMenu *view_type;
+@property (weak, nonatomic) IBOutlet KPDropMenu *view_type;
 @property (weak, nonatomic) IBOutlet UITextField *text_number_not_used;
 @property (weak, nonatomic) IBOutlet UITextView *tv_reason;
 @property (weak, nonatomic) IBOutlet UITextField *dateTextField;
