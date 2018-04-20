@@ -74,12 +74,22 @@
 }
 
 - (void)showCamera {
-    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
-        self.imgPicker = [[UIImagePickerController alloc] init];
-        self.imgPicker.sourceType = UIImagePickerControllerCameraDeviceFront;
-        self.imgPicker.delegate = self;
-        [self presentViewController:self.imgPicker animated:YES completion:nil];
+    if(self.array_image_Item.count > 10){
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Thông báo"
+                                                        message:@"Bạn được chọn tối đa 10 ảnh"
+                                                       delegate:nil
+                                              cancelButtonTitle:nil
+                                              otherButtonTitles:@"Đồng ý",nil];
+        [alert show];
+    }else {
+        if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+            self.imgPicker = [[UIImagePickerController alloc] init];
+            self.imgPicker.sourceType = UIImagePickerControllerCameraDeviceFront;
+            self.imgPicker.delegate = self;
+            [self presentViewController:self.imgPicker animated:YES completion:nil];
+        }
     }
+    
 }
 
 - (void) dismissKeyboard {
@@ -87,17 +97,26 @@
 }
 
 - (void)showLibrary {
-    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]) {
-        self.imgPicker = [[UIImagePickerController alloc] init];
-        self.imgPicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-        self.imgPicker.allowsEditing = YES;
-        self.imgPicker.delegate = self;
-        
-        if (IS_IPAD) {
-            self.popOver = [[UIPopoverController alloc] initWithContentViewController:self.imgPicker];
-            [self.popOver presentPopoverFromRect:self.view.bounds inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
-        } else if (IS_IPHONE) {
-            [self presentViewController:self.imgPicker animated:YES completion:nil];
+    if(self.array_image_Item.count > 10){
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Thông báo"
+                                                        message:@"Bạn được chọn tối đa 10 ảnh"
+                                                       delegate:nil
+                                              cancelButtonTitle:nil
+                                              otherButtonTitles:@"Đồng ý",nil];
+        [alert show];
+    }else {
+        if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]) {
+            self.imgPicker = [[UIImagePickerController alloc] init];
+            self.imgPicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+            self.imgPicker.allowsEditing = YES;
+            self.imgPicker.delegate = self;
+            
+            if (IS_IPAD) {
+                self.popOver = [[UIPopoverController alloc] initWithContentViewController:self.imgPicker];
+                [self.popOver presentPopoverFromRect:self.view.bounds inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+            } else if (IS_IPHONE) {
+                [self presentViewController:self.imgPicker animated:YES completion:nil];
+            }
         }
     }
 }
@@ -317,7 +336,7 @@
 }
 
 - (void) actionShowConfirmSendInvoice {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Xác nhận" message:@"Bạn chắc chắn muốn gửi hóa đơn này?" delegate:self cancelButtonTitle:@"Không" otherButtonTitles:@"Có", nil];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Xác nhận" message:@"Đ/c có chắc chắn muốn gửi hóa đơn này?" delegate:self cancelButtonTitle:@"Không" otherButtonTitles:@"Có", nil];
     alert.delegate = self;
     [alert show];
 }

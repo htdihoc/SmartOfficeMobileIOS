@@ -351,12 +351,20 @@
         {
             self.switchScreen = 0;
             [self.pmtcTableView reloadData];
+            if (employeeDebtHistoryList.count > 0){
+                
+            }else {
+                [self.HeaderView setHidden:NO];
+                self.cst_headerView.constant = 120;
+            }
         }
             break;
         case 1:
         {
             self.switchScreen = 1;
             [self.pmtcTableView reloadData];
+            [self.HeaderView setHidden:YES];
+            self.cst_headerView.constant = 0;
         }
             break;
         default:
