@@ -336,14 +336,15 @@
 }
 
 - (void) actionShowConfirmSendInvoice {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Xác nhận" message:@"Đ/c có chắc chắn muốn gửi hóa đơn này?" delegate:self cancelButtonTitle:@"Không" otherButtonTitles:@"Có", nil];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Xác nhận" message:@"Đ/c có chắc chắn muốn gửi hóa đơn này?" delegate:self cancelButtonTitle:@"Có" otherButtonTitles:@"Không", nil];
     alert.delegate = self;
     [alert show];
+    
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     switch (buttonIndex) {
-        case 1:
+        case 0:
             [self sendInvoiceConfirm];
             break;
         default:
