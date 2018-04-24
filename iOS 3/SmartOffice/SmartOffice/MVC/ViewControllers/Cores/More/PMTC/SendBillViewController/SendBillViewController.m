@@ -74,7 +74,7 @@
 }
 
 - (void)showCamera {
-    if(self.array_image_Item.count > 10){
+    if(self.array_image_Item.count >= 10){
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Thông báo"
                                                         message:@"Bạn được chọn tối đa 10 ảnh"
                                                        delegate:nil
@@ -97,7 +97,7 @@
 }
 
 - (void)showLibrary {
-    if(self.array_image_Item.count > 10){
+    if(self.array_image_Item.count >= 10){
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Thông báo"
                                                         message:@"Bạn được chọn tối đa 10 ảnh"
                                                        delegate:nil
@@ -336,10 +336,33 @@
 }
 
 - (void) actionShowConfirmSendInvoice {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Xác nhận" message:@"Đ/c có chắc chắn muốn gửi hóa đơn này?" delegate:self cancelButtonTitle:@"Có" otherButtonTitles:@"Không", nil];
-    alert.delegate = self;
-    [alert show];
+//    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Xác nhận" message:@"Đ/c có chắc chắn muốn gửi hóa đơn này?" delegate:self cancelButtonTitle:@"Có" otherButtonTitles:@"Không", nil];
+//    alert.delegate = self;
+//    [alert show];
+
+    UIAlertController * alert=[UIAlertController alertControllerWithTitle:@"Xác nhận"
+                                                                  message:@"Đ/c có chắc chắn muốn gửi hóa đơn này?"
+                                                           preferredStyle:UIAlertControllerStyleAlert];
     
+    UIAlertAction* yesButton = [UIAlertAction actionWithTitle:@"Có"
+                                                        style:UIAlertActionStyleDefault
+                                                      handler:^(UIAlertAction * action)
+                                {
+                                    NSLog(@"you pressed Yes, please button");
+                                    [self sendInvoiceConfirm];
+                                }];
+    
+    UIAlertAction* noButton = [UIAlertAction actionWithTitle:@"Không"
+                                                       style:UIAlertActionStyleDefault
+                                                     handler:^(UIAlertAction * action)
+    {
+        NSLog(@"you pressed No, thanks button");
+    }];
+    
+    [alert addAction:noButton];
+    [alert addAction:yesButton];
+    alert.preferredAction = yesButton;
+    [self presentViewController:alert animated:YES completion:nil];
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {

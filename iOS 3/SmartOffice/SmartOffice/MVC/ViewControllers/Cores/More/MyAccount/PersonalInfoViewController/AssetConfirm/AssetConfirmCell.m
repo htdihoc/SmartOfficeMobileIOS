@@ -24,7 +24,7 @@
     
     _view_type.items = @[@"Báo mất", @"Báo hỏng", @"Báo không sử dụng"];
     _view_type.selectedDelegate = self;
-    
+    _view_type.title = _view_type.items[0];
     _datePicker = [UIDatePicker new];
     _pickerDoneButton = [UIButton new];
     _format = [NSDateFormatter new];
@@ -32,7 +32,7 @@
     [_format setDateFormat:@"dd/MM/yyyy"];
     _dateTextField.text = [_format stringFromDate: [NSDate date]];
     _tv_reason.text = @"";
-    _text_number_not_used.text = @"1";
+    
     [self selectDateAuto];
 }
 

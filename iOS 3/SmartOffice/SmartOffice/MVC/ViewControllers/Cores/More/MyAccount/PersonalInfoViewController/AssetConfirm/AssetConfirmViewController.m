@@ -53,6 +53,12 @@
             bbbgCell = [nib objectAtIndex:0];
         }
         bbbgCell.btn_view_detail.tag = indexPath.row;
+        
+        bbbgCell.value_goods_name.text = self.value_commodity_name;
+        bbbgCell.value_number.text = self.value_number;
+        bbbgCell.value_serial.text = self.value_serial;
+        bbbgCell.value_status.text = self.value_status;
+        
         bbbgCell.selectionStyle = UIAccessibilityTraitNone;
         return bbbgCell;
     } else {
@@ -61,6 +67,7 @@
             NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"AssetConfirmCell" owner:self options:nil];
             assetConfirmCell = [nib objectAtIndex:0];
         }
+        assetConfirmCell.text_number_not_used.text = self.value_number;
         assetConfirmCell.selectionStyle = UIAccessibilityTraitNone;
         return assetConfirmCell;
     }
@@ -75,9 +82,28 @@
 }
 
 - (IBAction)confirmAction:(id)sender {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Xác nhận" message:@"Bạn chắc chắn muốn gửi xác nhận này?" delegate:self cancelButtonTitle:@"Hủy" otherButtonTitles:@"Gửi", nil];
-    alert.delegate = self;
-    [alert show];
+    if([IntToString(assetConfirmCell.type) isEqual: @""]){
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Thông báo" message:@"Bạn chưa chọn loại tài sản" delegate:self cancelButtonTitle:nil otherButtonTitles:@"Đồng ý", nil];
+        [alert show];
+        [assetConfirmCell.view_type becomeFirstResponder];
+        return;
+    }else if ([assetConfirmCell.text_number_not_used.text integerValue] > [self.value_number integerValue]){
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Thông báo" message:@"Bạn phải nhập nhỏ hơn hoặc bằng số lượng đang có" delegate:self cancelButtonTitle:nil otherButtonTitles:@"Đồng ý", nil];
+        [alert show];
+        [assetConfirmCell.text_number_not_used becomeFirstResponder];
+        return;
+    }else if([assetConfirmCell.tv_reason.text isEqual: @""]){
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Thông báo" message:@"Bạn chưa nhập nguyên nhân" delegate:self cancelButtonTitle:nil otherButtonTitles:@"Đồng ý", nil];
+        [alert show];
+        [assetConfirmCell.tv_reason becomeFirstResponder];
+        return;
+    }else {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Xác nhận" message:@"Bạn chắc chắn muốn gửi xác nhận này?" delegate:self cancelButtonTitle:@"Hủy" otherButtonTitles:@"Gửi", nil];
+        alert.delegate = self;
+        [alert show];
+        return;
+    }
+    
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {

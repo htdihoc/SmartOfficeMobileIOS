@@ -206,6 +206,20 @@ typedef NS_ENUM(NSInteger, Status) {
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"AssetConfirm" bundle:nil];
     AssetConfirmViewController *assetConfirm = (AssetConfirmViewController *)[storyboard instantiateViewControllerWithIdentifier:@"AssetConfirmViewController"];
     assetConfirm.merEntityId = self.merEntityId;
+    assetConfirm.value_commodity_code = self.value_commodity_code;
+    assetConfirm.value_commodity_name = self.value_commodity_name;
+    assetConfirm.value_unit = self.value_unit;
+    assetConfirm.value_number = self.value_number;
+    assetConfirm.value_serial = self.value_serial;
+    assetConfirm.value_manufacturer = self.value_manufacturer;
+    assetConfirm.value_aspect = self.value_aspect;
+    assetConfirm.value_expiry_date = self.value_expiry_date;
+    assetConfirm.value_asset_type = self.value_asset_type;
+    assetConfirm.value_use_time = self.value_use_time;
+    assetConfirm.value_price = self.value_price;
+    assetConfirm.value_status = self.value_status;
+    assetConfirm.count = self.count;
+    assetConfirm.typeKTTS = self.typeKTTS;
     [self.navigationController pushViewController:assetConfirm animated:YES];
 }
 
