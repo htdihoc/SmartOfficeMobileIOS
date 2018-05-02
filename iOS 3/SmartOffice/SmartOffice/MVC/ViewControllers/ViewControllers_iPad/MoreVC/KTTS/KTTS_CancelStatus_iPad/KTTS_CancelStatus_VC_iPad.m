@@ -113,6 +113,7 @@
     self.btn_check_1.hidden = NO;
     self.btn_check_2.hidden = YES;
     self.btn_check_3.hidden = YES;
+    
     self.typeCancel = 3;
     message = @"Không sử dụng";
 }
@@ -123,10 +124,11 @@
 //    [_img_Check_2 setImage:btnImage];
 //    [_img_Check_3 setImage:nil];
     self.btn_check_1.hidden = YES;
-    self.btn_check_2.hidden = YES;
-    self.btn_check_3.hidden = NO;
-    self.typeCancel = 1;
-    message = @"Đã báo mất";
+    self.btn_check_2.hidden = NO;
+    self.btn_check_3.hidden = YES;
+    
+    self.typeCancel = 2;
+    message = @"Đã báo hỏng";
 }
 
 - (IBAction)actionCheck_3:(id)sender {
@@ -135,10 +137,11 @@
 //    [_img_Check_2 setImage:nil];
 //    [_img_Check_3 setImage:btnImage];
     self.btn_check_1.hidden = YES;
-    self.btn_check_2.hidden = NO;
-    self.btn_check_3.hidden = YES;
-    self.typeCancel = 2;
-    message = @"Đã báo hỏng";
+    self.btn_check_2.hidden = YES;
+    self.btn_check_3.hidden = NO;
+    
+    self.typeCancel = 1;
+    message = @"Đã báo mất";
 }
 
 - (IBAction)actionDismiss:(id)sender {
