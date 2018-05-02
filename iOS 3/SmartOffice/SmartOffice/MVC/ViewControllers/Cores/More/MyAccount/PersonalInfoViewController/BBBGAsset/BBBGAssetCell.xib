@@ -67,39 +67,18 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="y1h-NX-j0O">
-                                <rect key="frame" x="275" y="0.0" width="90" height="35"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="90" id="AQW-D4-pCq"/>
-                                    <constraint firstAttribute="height" constant="35" id="Hg9-Sp-A8h"/>
-                                </constraints>
-                                <state key="normal" title="Xem chi tiết">
-                                    <color key="titleColor" red="0.38431372549999998" green="0.38431372549999998" blue="0.38431372549999998" alpha="1" colorSpace="calibratedRGB"/>
-                                </state>
-                            </button>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="detail_info" translatesAutoresizingMaskIntoConstraints="NO" id="fZW-Vr-ozP">
-                                <rect key="frame" x="257" y="9" width="18" height="18"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="18" id="4yB-J7-TrV"/>
-                                    <constraint firstAttribute="height" constant="18" id="bwR-Pa-UTK"/>
-                                </constraints>
-                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="Cvt-dw-Dlc" secondAttribute="trailing" id="0NW-1d-S4j"/>
                             <constraint firstItem="oxF-mT-aQh" firstAttribute="leading" secondItem="7NR-NF-LhA" secondAttribute="leading" constant="-20" id="5CA-DX-cQH"/>
                             <constraint firstItem="mOK-6q-SG4" firstAttribute="top" secondItem="7NR-NF-LhA" secondAttribute="top" id="9IV-Yi-1fN"/>
-                            <constraint firstItem="y1h-NX-j0O" firstAttribute="centerY" secondItem="7NR-NF-LhA" secondAttribute="centerY" id="9db-SK-hfE"/>
-                            <constraint firstAttribute="trailing" secondItem="y1h-NX-j0O" secondAttribute="trailing" constant="10" id="EEe-zR-Yp4"/>
                             <constraint firstAttribute="bottom" secondItem="Cvt-dw-Dlc" secondAttribute="bottom" id="LIp-CN-Kln"/>
                             <constraint firstItem="oxF-mT-aQh" firstAttribute="centerY" secondItem="7NR-NF-LhA" secondAttribute="centerY" id="Nov-uo-KlZ"/>
                             <constraint firstAttribute="height" constant="35" id="WZa-Vn-pNu"/>
-                            <constraint firstItem="fZW-Vr-ozP" firstAttribute="centerY" secondItem="7NR-NF-LhA" secondAttribute="centerY" id="YLI-w8-kDk"/>
                             <constraint firstAttribute="trailing" secondItem="mOK-6q-SG4" secondAttribute="trailing" id="sbK-1y-qcL"/>
                             <constraint firstItem="Cvt-dw-Dlc" firstAttribute="leading" secondItem="7NR-NF-LhA" secondAttribute="leading" id="t6c-vr-l03"/>
                             <constraint firstItem="mOK-6q-SG4" firstAttribute="leading" secondItem="7NR-NF-LhA" secondAttribute="leading" id="u2s-aX-iyV"/>
-                            <constraint firstItem="y1h-NX-j0O" firstAttribute="leading" secondItem="fZW-Vr-ozP" secondAttribute="trailing" id="wux-Rv-yfp"/>
                         </constraints>
                     </view>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Số lượng:" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Tw-oF-3qn">
@@ -208,7 +187,6 @@
                 </constraints>
             </tableViewCellContentView>
             <connections>
-                <outlet property="btn_view_detail" destination="y1h-NX-j0O" id="RN2-G5-N4Z"/>
                 <outlet property="cellNumberView" destination="oxF-mT-aQh" id="1mG-1N-9hv"/>
                 <outlet property="heightTitleStatusConstrain" destination="Ec0-rB-UKq" id="l9g-hY-a5T"/>
                 <outlet property="heightValueStatusConstrain" destination="cdh-7M-l9F" id="rto-N1-kr4"/>
@@ -225,7 +203,4 @@
             <point key="canvasLocation" x="109.5" y="85"/>
         </tableViewCell>
     </objects>
-    <resources>
-        <image name="detail_info" width="44" height="44"/>
-    </resources>
 </document>

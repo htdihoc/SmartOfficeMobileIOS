@@ -29,6 +29,10 @@
     _setCancel = NO;
     btnImage = [UIImage imageNamed:@"icon_check.png"];
     
+    self.btn_check_1.hidden = NO;
+    self.btn_check_2.hidden = YES;
+    self.btn_check_3.hidden = YES;
+    
     dispatch_async(dispatch_get_main_queue(), ^{
         if ([self.strStatus rangeOfString:@"KSD"].location != NSNotFound) {
             self.constraint_ksd.constant = 40;
@@ -103,27 +107,36 @@
 
 - (IBAction)actionCheck_1:(id)sender {
     // Không sử dụng
-    [_img_Check_1 setImage:btnImage];
-    [_img_Check_2 setImage:nil];
-    [_img_Check_3 setImage:nil];
+//    [_img_Check_1 setImage:btnImage];
+//    [_img_Check_2 setImage:nil];
+//    [_img_Check_3 setImage:nil];
+    self.btn_check_1.hidden = NO;
+    self.btn_check_2.hidden = YES;
+    self.btn_check_3.hidden = YES;
     self.typeCancel = 3;
     message = @"Không sử dụng";
 }
 
 - (IBAction)actionCheck_2:(id)sender {
     // đã báo mất
-    [_img_Check_1 setImage:nil];
-    [_img_Check_2 setImage:btnImage];
-    [_img_Check_3 setImage:nil];
+//    [_img_Check_1 setImage:nil];
+//    [_img_Check_2 setImage:btnImage];
+//    [_img_Check_3 setImage:nil];
+    self.btn_check_1.hidden = YES;
+    self.btn_check_2.hidden = YES;
+    self.btn_check_3.hidden = NO;
     self.typeCancel = 1;
     message = @"Đã báo mất";
 }
 
 - (IBAction)actionCheck_3:(id)sender {
     // đã báo hỏng
-    [_img_Check_1 setImage:nil];
-    [_img_Check_2 setImage:nil];
-    [_img_Check_3 setImage:btnImage];
+//    [_img_Check_1 setImage:nil];
+//    [_img_Check_2 setImage:nil];
+//    [_img_Check_3 setImage:btnImage];
+    self.btn_check_1.hidden = YES;
+    self.btn_check_2.hidden = NO;
+    self.btn_check_3.hidden = YES;
     self.typeCancel = 2;
     message = @"Đã báo hỏng";
 }

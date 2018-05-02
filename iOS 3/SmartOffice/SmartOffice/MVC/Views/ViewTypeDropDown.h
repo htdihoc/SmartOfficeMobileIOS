@@ -10,4 +10,9 @@
 
 @interface ViewTypeDropDown : UIView
 
+@property (weak, nonatomic) IBOutlet UIImageView *checkView;
+@property (weak, nonatomic) IBOutlet UILabel *textLabel;
+
+@property (assign, nonatomic) BOOL selected;
+
 @end

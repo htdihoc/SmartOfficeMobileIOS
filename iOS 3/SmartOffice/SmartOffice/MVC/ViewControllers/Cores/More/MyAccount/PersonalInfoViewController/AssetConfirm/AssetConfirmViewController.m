@@ -82,25 +82,62 @@
 }
 
 - (IBAction)confirmAction:(id)sender {
+    NSDate *dateFromString = [NSDate new];
+    NSTimeInterval timeInMiliseconds = [dateFromString timeIntervalSince1970]*1000;
+    NSInteger dateNowInteger = timeInMiliseconds;
+    
     if([IntToString(assetConfirmCell.type) isEqual: @""]){
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Thông báo" message:@"Bạn chưa chọn loại tài sản" delegate:self cancelButtonTitle:nil otherButtonTitles:@"Đồng ý", nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Thông báo" message:@"Bạn chưa chọn loại tài sản" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"Đồng ý", nil];
         [alert show];
         [assetConfirmCell.view_type becomeFirstResponder];
         return;
-    }else if ([assetConfirmCell.text_number_not_used.text integerValue] > [self.value_number integerValue]){
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Thông báo" message:@"Bạn phải nhập nhỏ hơn hoặc bằng số lượng đang có" delegate:self cancelButtonTitle:nil otherButtonTitles:@"Đồng ý", nil];
+    }else if ([assetConfirmCell.text_number_not_used.text integerValue] > [self.value_number integerValue] || [assetConfirmCell.text_number_not_used.text integerValue] == 0){
+        NSString *typeString = [NSString stringWithFormat:@"Đ/c phải nhập số lượng tài sản %@ nhỏ hơn hoặc bằng số lượng đang có", assetConfirmCell.textDropDown.text];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Thông báo" message:typeString delegate:self cancelButtonTitle:nil otherButtonTitles:@"Đồng ý", nil];
         [alert show];
         [assetConfirmCell.text_number_not_used becomeFirstResponder];
         return;
+    }else if(assetConfirmCell.date > dateNowInteger){
+        NSString *typeString = [NSString stringWithFormat:@"Đ/c phải nhập ngày %@ nhỏ hơn hoặc bằng ngày hiện tại", assetConfirmCell.textDropDown.text];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Thông báo" message:typeString delegate:nil cancelButtonTitle:nil otherButtonTitles:@"Đồng ý", nil];
+        [alert show];
+        [assetConfirmCell.dateTextField becomeFirstResponder];
+        return;
     }else if([assetConfirmCell.tv_reason.text isEqual: @""]){
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Thông báo" message:@"Bạn chưa nhập nguyên nhân" delegate:self cancelButtonTitle:nil otherButtonTitles:@"Đồng ý", nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Thông báo" message:@"Bạn chưa nhập nguyên nhân" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"Đồng ý", nil];
         [alert show];
         [assetConfirmCell.tv_reason becomeFirstResponder];
         return;
     }else {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Xác nhận" message:@"Bạn chắc chắn muốn gửi xác nhận này?" delegate:self cancelButtonTitle:@"Hủy" otherButtonTitles:@"Gửi", nil];
-        alert.delegate = self;
-        [alert show];
+//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Xác nhận" message:@"Đ/c chắn chắn muốn gửi xác nhận này?" delegate:self cancelButtonTitle:@"Hủy" otherButtonTitles:@"Gửi", nil];
+//        alert.delegate = self;
+//        [alert show];
+        
+        UIAlertController * alert=[UIAlertController alertControllerWithTitle:@"Xác nhận"
+                                                                      message:@"Đ/c chắn chắn muốn gửi xác nhận này?"
+                                                               preferredStyle:UIAlertControllerStyleAlert];
+        
+        UIAlertAction* yesButton = [UIAlertAction actionWithTitle:@"Gửi"
+                                                            style:UIAlertActionStyleDefault
+                                                          handler:^(UIAlertAction * action)
+                                    {
+                                        NSLog(@"you pressed Yes, please button");
+                                        [self sendConfirmAction];
+                                    }];
+        
+        UIAlertAction* noButton = [UIAlertAction actionWithTitle:@"Hủy"
+                                                           style:UIAlertActionStyleDefault
+                                                         handler:^(UIAlertAction * action)
+                                   {
+                                       NSLog(@"you pressed No, thanks button");
+                                   }];
+        
+        [noButton setValue:[UIColor grayColor] forKey:@"titleTextColor"];
+        [alert addAction:noButton];
+        [alert addAction:yesButton];
+        alert.preferredAction = yesButton;
+        [self presentViewController:alert animated:YES completion:nil];
+        
         return;
     }
     

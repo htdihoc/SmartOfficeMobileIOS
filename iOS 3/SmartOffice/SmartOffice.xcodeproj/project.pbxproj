@@ -82,6 +82,10 @@
 		18EF6FDF1F0F7A3200DED0FF /* MasterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18EF6FDB1F0F7A3200DED0FF /* MasterViewController.xib */; };
 		18F39A711F39B3E300F78350 /* AttachViewController_iPad.m in Sources */ = {isa = PBXBuildFile; fileRef = 18F39A701F39B3E300F78350 /* AttachViewController_iPad.m */; };
 		18F39A741F39B3FE00F78350 /* AttachViewController_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 18F39A731F39B3FE00F78350 /* AttachViewController_iPad.storyboard */; };
+		44833D6720999F7900109E3A /* MKDropdownMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 44833D6520999F7900109E3A /* MKDropdownMenu.m */; };
+		44833D6A2099AEB700109E3A /* ViewTypeDropDown.m in Sources */ = {isa = PBXBuildFile; fileRef = 44833D692099AEB700109E3A /* ViewTypeDropDown.m */; };
+		44833D6C2099AEC600109E3A /* ViewTypeDropDown.xib in Resources */ = {isa = PBXBuildFile; fileRef = 44833D6B2099AEC600109E3A /* ViewTypeDropDown.xib */; };
+		44833D6E2099CBBF00109E3A /* checkMark@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 44833D6D2099CBBE00109E3A /* checkMark@2x.png */; };
 		6402834B1EA0806C00984BF4 /* StatusCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6402834A1EA0806C00984BF4 /* StatusCell.m */; };
 		6402834F1EA0809300984BF4 /* ReasonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6402834E1EA0809300984BF4 /* ReasonCell.m */; };
 		640283521EA080C600984BF4 /* handOverCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 640283511EA080C600984BF4 /* handOverCell.m */; };
@@ -1130,6 +1134,12 @@
 		18F39A6F1F39B3E300F78350 /* AttachViewController_iPad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AttachViewController_iPad.h; sourceTree = "<group>"; };
 		18F39A701F39B3E300F78350 /* AttachViewController_iPad.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AttachViewController_iPad.m; sourceTree = "<group>"; };
 		18F39A731F39B3FE00F78350 /* AttachViewController_iPad.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = AttachViewController_iPad.storyboard; sourceTree = "<group>"; };
+		44833D6520999F7900109E3A /* MKDropdownMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MKDropdownMenu.m; sourceTree = "<group>"; };
+		44833D6620999F7900109E3A /* MKDropdownMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MKDropdownMenu.h; sourceTree = "<group>"; };
+		44833D682099AEB700109E3A /* ViewTypeDropDown.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewTypeDropDown.h; sourceTree = "<group>"; };
+		44833D692099AEB700109E3A /* ViewTypeDropDown.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewTypeDropDown.m; sourceTree = "<group>"; };
+		44833D6B2099AEC600109E3A /* ViewTypeDropDown.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ViewTypeDropDown.xib; sourceTree = "<group>"; };
+		44833D6D2099CBBE00109E3A /* checkMark@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "checkMark@2x.png"; sourceTree = "<group>"; };
 		640283491EA0806C00984BF4 /* StatusCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StatusCell.h; path = Views/Cells/Integration/TTNS/StatusCell.h; sourceTree = "<group>"; };
 		6402834A1EA0806C00984BF4 /* StatusCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StatusCell.m; path = Views/Cells/Integration/TTNS/StatusCell.m; sourceTree = "<group>"; };
 		6402834D1EA0809300984BF4 /* ReasonCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ReasonCell.h; path = Views/Cells/Integration/TTNS/ReasonCell.h; sourceTree = "<group>"; };
@@ -2897,6 +2907,15 @@
 			path = MasterViewController;
 			sourceTree = "<group>";
 		};
+		44833D5E20999E9500109E3A /* DropdownMenu */ = {
+			isa = PBXGroup;
+			children = (
+				44833D6620999F7900109E3A /* MKDropdownMenu.h */,
+				44833D6520999F7900109E3A /* MKDropdownMenu.m */,
+			);
+			path = DropdownMenu;
+			sourceTree = "<group>";
+		};
 		6407B7951EA8A31E00105199 /* CHOISEUSER */ = {
 			isa = PBXGroup;
 			children = (
@@ -3930,6 +3949,9 @@
 				B147BC401F7AC6E300A95B15 /* SO_TTNSHUBCustomView.xib */,
 				938554B91F831DDD00312169 /* PARoundImageView.h */,
 				938554BA1F831DDD00312169 /* PARoundImageView.m */,
+				44833D682099AEB700109E3A /* ViewTypeDropDown.h */,
+				44833D692099AEB700109E3A /* ViewTypeDropDown.m */,
+				44833D6B2099AEC600109E3A /* ViewTypeDropDown.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -6475,6 +6497,7 @@
 		CE2306981E89CA0C00F87DA7 /* Libs */ = {
 			isa = PBXGroup;
 			children = (
+				44833D5E20999E9500109E3A /* DropdownMenu */,
 				93760E1F1F7213400061AE0A /* FCAlertView */,
 				B1AC29151F1CD3BB005680C2 /* IQKeyboardManager */,
 				86EC0B8F1EC8C91200D9C97D /* MZFormSheetController */,
@@ -6585,6 +6608,7 @@
 		CE2306D71E89CA0C00F87DA7 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				44833D6D2099CBBE00109E3A /* checkMark@2x.png */,
 				956BF4AB1FBDD7ED00DC79EC /* ic_clock@2x.png */,
 				8187C9921F9B546300074E91 /* reminderImage@2x.png */,
 				CE7C27911E911EA400DB1198 /* menu */,
@@ -7075,6 +7099,7 @@
 				B1C4AFB51EA8888900058A67 /* RegisterList.xib in Resources */,
 				B1B461E11EAA1FC20004D956 /* RegisterWatchCell.xib in Resources */,
 				B1B11C4C1EB353F8007422BB /* VOffice_ListMeetingMain_iPad.xib in Resources */,
+				44833D6C2099AEC600109E3A /* ViewTypeDropDown.xib in Resources */,
 				7B9E0EFA1F73D6680026EB40 /* SendBillCollectionDetailCell.xib in Resources */,
 				846540101EC00FAB0050CE94 /* ManagerWorkVC_iPad.xib in Resources */,
 				186535361F011E4E005BBD75 /* DealHistoryCell.xib in Resources */,
@@ -7254,6 +7279,7 @@
 				7B4BE7721F7CC91300EE9F8D /* PMTC_ListDocumentTableViewCell_iPad.xib in Resources */,
 				B1C35EBB1EB303B100CC4F21 /* ContentFilterAndSearchBarCell.xib in Resources */,
 				CE2306FD1E89CA0C00F87DA7 /* MuseoSans_1.otf in Resources */,
+				44833D6E2099CBBF00109E3A /* checkMark@2x.png in Resources */,
 				B1C4B03F1EA8892E00058A67 /* PersonalInfoCell.xib in Resources */,
 				B1C4B0091EA888EE00058A67 /* PersonalAssetInfoCell.xib in Resources */,
 				B16EEEF71EBC637D00099F38 /* QLTT_MasterViewCell.xib in Resources */,
@@ -7538,6 +7564,7 @@
 				801457FA1EC1ACC800E8B061 /* UIScrollView+SVInfiniteScrolling.m in Sources */,
 				B1DF5A081ED6B94D00A01E85 /* QLTT_TreeVCMode.m in Sources */,
 				80C89DFC1EC056670071B0DB /* MissionModel.m in Sources */,
+				44833D6A2099AEB700109E3A /* ViewTypeDropDown.m in Sources */,
 				8430282C1EC15FAC00017D87 /* MGCAlignedGeometry.m in Sources */,
 				CE2306661E89C68200F87DA7 /* AppDelegate.m in Sources */,
 				188BCD661F03AC0A00472FED /* SendBillCollectionCell.m in Sources */,
@@ -7562,6 +7589,7 @@
 				B15AA2511EA4D29900DF78A8 /* ReasonContentCell.m in Sources */,
 				7BA16F531EC5564C00B49CCD /* SearchHandler_iPad.m in Sources */,
 				187933231EBB17F400AFA59E /* KTTSProcessor.m in Sources */,
+				44833D6720999F7900109E3A /* MKDropdownMenu.m in Sources */,
 				80913C1A1EA4C26500C10FB2 /* DetailWorkCell.m in Sources */,
 				86060B381ED41C2000B44218 /* UIAlertView+Blocks.m in Sources */,
 				8007D9161E9F5BC50045877D /* ListWorkVC.m in Sources */,

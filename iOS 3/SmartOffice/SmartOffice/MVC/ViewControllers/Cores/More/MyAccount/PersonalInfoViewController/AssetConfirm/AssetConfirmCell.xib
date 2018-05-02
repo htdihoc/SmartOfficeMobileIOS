@@ -80,17 +80,22 @@
                         </attributedString>
                         <nil key="highlightedColor"/>
                     </label>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3qy-yf-rd3" customClass="KPDropMenu">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZN1-yQ-dxa">
                         <rect key="frame" x="16" y="94" width="343" height="32"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3qy-yf-rd3" customClass="MKDropdownMenu">
+                        <rect key="frame" x="16" y="94" width="343" height="32"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="32" id="d0W-3E-phU"/>
                         </constraints>
                     </view>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tL7-pj-641">
-                        <rect key="frame" x="20" y="151" width="180" height="22"/>
+                        <rect key="frame" x="20" y="151" width="345" height="22"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="180" id="56B-Ed-8aS"/>
                             <constraint firstAttribute="height" constant="22" id="QzE-nZ-5J2"/>
                         </constraints>
                         <attributedString key="attributedText">
@@ -119,9 +124,8 @@
                         <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                     </textField>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oFl-YO-XG5">
-                        <rect key="frame" x="20" y="238" width="180" height="22"/>
+                        <rect key="frame" x="20" y="238" width="345" height="22"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="180" id="abx-1t-5i5"/>
                             <constraint firstAttribute="height" constant="22" id="feM-YR-wWG"/>
                         </constraints>
                         <attributedString key="attributedText">
@@ -203,7 +207,9 @@
                     </textView>
                 </subviews>
                 <constraints>
+                    <constraint firstAttribute="trailing" secondItem="oFl-YO-XG5" secondAttribute="trailing" constant="10" id="0Mc-Ye-3NH"/>
                     <constraint firstItem="3qy-yf-rd3" firstAttribute="leading" secondItem="Fhg-Gz-5cC" secondAttribute="leading" constant="16" id="3YN-Ja-20a"/>
+                    <constraint firstItem="ZN1-yQ-dxa" firstAttribute="bottom" secondItem="3qy-yf-rd3" secondAttribute="bottom" id="75w-WI-ZD9"/>
                     <constraint firstAttribute="trailing" secondItem="uzA-Ld-bZ5" secondAttribute="trailing" id="7Vq-lj-LlS"/>
                     <constraint firstItem="D1F-xG-Apw" firstAttribute="leading" secondItem="Fhg-Gz-5cC" secondAttribute="leading" constant="20" id="9H1-bm-ouf"/>
                     <constraint firstItem="1om-Da-mX2" firstAttribute="leading" secondItem="Fhg-Gz-5cC" secondAttribute="leading" constant="16" id="Div-UI-L41"/>
@@ -222,17 +228,24 @@
                     <constraint firstItem="m3z-HY-FrJ" firstAttribute="leading" secondItem="Fhg-Gz-5cC" secondAttribute="leading" constant="20" id="hyY-no-NYC"/>
                     <constraint firstAttribute="trailing" secondItem="caD-mu-SAp" secondAttribute="trailing" constant="16" id="jo1-9P-ZcU"/>
                     <constraint firstItem="m3z-HY-FrJ" firstAttribute="top" secondItem="1om-Da-mX2" secondAttribute="bottom" constant="25" id="kWo-Wp-D2A"/>
+                    <constraint firstItem="ZN1-yQ-dxa" firstAttribute="top" secondItem="3qy-yf-rd3" secondAttribute="top" id="t4h-Uf-Hoa"/>
+                    <constraint firstItem="ZN1-yQ-dxa" firstAttribute="trailing" secondItem="3qy-yf-rd3" secondAttribute="trailing" id="tq6-z6-wPM"/>
                     <constraint firstItem="oFl-YO-XG5" firstAttribute="leading" secondItem="Fhg-Gz-5cC" secondAttribute="leading" constant="20" id="u2x-3c-cDe"/>
                     <constraint firstItem="caD-mu-SAp" firstAttribute="top" secondItem="tL7-pj-641" secondAttribute="bottom" constant="8" id="v7b-jw-M66"/>
                     <constraint firstAttribute="trailing" secondItem="3qy-yf-rd3" secondAttribute="trailing" constant="16" id="v8H-we-hf0"/>
+                    <constraint firstAttribute="trailing" secondItem="tL7-pj-641" secondAttribute="trailing" constant="10" id="xoi-GV-HNn"/>
+                    <constraint firstItem="ZN1-yQ-dxa" firstAttribute="leading" secondItem="3qy-yf-rd3" secondAttribute="leading" id="z91-lq-Bdq"/>
                     <constraint firstItem="oFl-YO-XG5" firstAttribute="top" secondItem="caD-mu-SAp" secondAttribute="bottom" constant="25" id="zF8-st-fBW"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
                 <outlet property="dateTextField" destination="Yjy-hD-DCH" id="bpi-Bf-dOp"/>
+                <outlet property="dayNotUseLabel" destination="oFl-YO-XG5" id="sXC-hk-gO1"/>
+                <outlet property="numberNotUseLabel" destination="tL7-pj-641" id="qNh-Qm-Anp"/>
+                <outlet property="textDropDown" destination="ZN1-yQ-dxa" id="lJd-CZ-Hjy"/>
                 <outlet property="text_number_not_used" destination="caD-mu-SAp" id="6yM-yE-Hyc"/>
                 <outlet property="tv_reason" destination="mjP-0u-f5P" id="Bz0-Hi-OBl"/>
-                <outlet property="view_type" destination="3qy-yf-rd3" id="4Tx-HI-6Hq"/>
+                <outlet property="view_type" destination="3qy-yf-rd3" id="JF4-ut-uk7"/>
             </connections>
             <point key="canvasLocation" x="19.5" y="106.5"/>
         </tableViewCell>
