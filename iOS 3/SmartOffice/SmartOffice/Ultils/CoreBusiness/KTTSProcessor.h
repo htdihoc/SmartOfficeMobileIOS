@@ -15,6 +15,7 @@ typedef void(^ApiResponseHandler)(id result, NSString *error);
 typedef void(^HandleResponseError)(NSString *Error);
 typedef void(^HandleResponseException)(NSString *Exception);
 
++ (void) postUPDATE_IN_HAN:(NSDictionary *)parameter handle:(ApiResponseHandler)handle onError:(HandleResponseError)onError onException:(HandleResponseException)onException;
 + (void) postKTTS_CONFIRM_TTTS:(NSDictionary *)parameter handle:(ApiResponseHandler)handle onError:(HandleResponseError)onError onException:(HandleResponseException)onException;
 + (void) postKTTS_CANCEL_TTTS:(NSDictionary *)parameter handle:(ApiResponseHandler)handle onError:(HandleResponseError)onError onException:(HandleResponseException)onException;
 + (void) postKTTS_THONG_TIN_TAI_SAN: (NSDictionary *)parameter handle:(ApiResponseHandler)handle onError:(HandleResponseError)onError onException:(HandleResponseException)onException;

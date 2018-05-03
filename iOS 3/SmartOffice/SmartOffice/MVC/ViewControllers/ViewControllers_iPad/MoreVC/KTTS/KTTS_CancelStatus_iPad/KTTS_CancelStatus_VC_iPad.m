@@ -75,7 +75,7 @@
     });
     //    36/152/218
     
-    message = @"Đã báo mất";
+    message = @"Không sử dụng";
     
     //Your entry string
     NSString *myString = [NSString stringWithFormat:@"%@ %@ %@", @"Bạn chắc chắn muốn hủy thông báo ", message, @" với tài sản này?"];
@@ -167,6 +167,9 @@
                                         @"type": IntToString(self.typeCancel)
                                         };
             [KTTSProcessor postKTTS_CANCEL_TTTS:parameter handle:^(id result, NSString *error) {
+                [[NSNotificationCenter defaultCenter]
+                 postNotificationName:@"CancelSucessNotification"
+                 object:self];
                 UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Thông báo" message:@"Hủy thành công." delegate:self cancelButtonTitle:@"Đóng" otherButtonTitles:nil, nil];
                 [alert show];
             } onError:^(NSString *Error) {

@@ -20,6 +20,19 @@
 #define KTTS_COUNT_DETAIL_BBBG          @"ktts/countEntityInHan"
 #define KTTS_CANCEL_TTTS                @"ktts/rejectAssetManager"
 #define KTTS_CONFIRM_TTTS               @"ktts/updateStatusEntity"
+#define KTTS_UPDATE_IN_HAN              @"ktts/updateTypeInHan"
+
++ (void) postUPDATE_IN_HAN:(NSDictionary *)parameter handle:(ApiResponseHandler)handle onError:(HandleResponseError)onError onException:(HandleResponseException)onException {
+    [THService requestPOSTFromUrl: [[GlobalObj getInstance] getApiFullUrl: KTTS_UPDATE_IN_HAN] parameter: parameter withProgress:nil completion:^(NSDictionary *response) {
+        if ([response[@"resultCode"] integerValue] == 200) {
+            handle((NSDictionary *)response[@"data"], nil);
+        }
+    } onError:^(NSDictionary *error) {
+        onError([error objectForKey:@"message"]);
+    } onException:^(NSException *exception) {
+        onException(exception.description);
+    }];
+}
 
 + (void) postKTTS_CONFIRM_TTTS:(NSDictionary *)parameter handle:(ApiResponseHandler)handle onError:(HandleResponseError)onError onException:(HandleResponseException)onException {
     [THService requestPOSTFromUrl: [[GlobalObj getInstance] getApiFullUrl: KTTS_CONFIRM_TTTS] parameter: parameter withProgress:nil completion:^(NSDictionary *response) {

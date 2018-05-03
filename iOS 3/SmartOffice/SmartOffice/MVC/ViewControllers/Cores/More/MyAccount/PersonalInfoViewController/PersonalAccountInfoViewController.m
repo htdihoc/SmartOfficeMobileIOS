@@ -112,6 +112,47 @@
     } onError:^(NSString *Error) {
     } onException:^(NSString *Exception) {
     }];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(cancelSucessNotification:)
+                                                 name:@"CancelSucessNotification"
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(acceptOrRefuseActionNotification:)
+                                                 name:@"AcceptOrRefuseActionNotification"
+                                               object:nil];
+}
+
+- (void) acceptOrRefuseActionNotification:(NSNotification *) notification
+{
+
+}
+
+- (void) cancelSucessNotification:(NSNotification *) notification
+{
+    [self.dataBBBGArr removeAllObjects];
+    
+    NSDictionary *parameter = @{
+                                @"employeeId": @"102026",
+                                @"start": IntToString(self.startBBBG),
+                                @"keyword": self.searchview.text,
+                                @"limit": IntToString(1000)
+                                };
+    [KTTSProcessor postKTTS_BBBG:parameter handle:^(id result, NSString *error) {
+        NSArray *array = result[@"listMinuteHandOver"];
+        
+        [self.dataBBBGArr addObjectsFromArray:array];
+        NSPredicate *p = [NSPredicate predicateWithFormat:@"status = %d", 0];
+        self.filterDataBBBGArr = [self.dataBBBGArr filteredArrayUsingPredicate:p];
+        self.label_Badge.text = [NSString stringWithFormat:@"%lu", (unsigned long)self.filterDataBBBGArr.count];
+        if(self.filterDataBBBGArr.count == 0){
+            self.label_Badge.hidden = YES;
+        }else {
+            self.label_Badge.hidden = NO;
+        }
+    } onError:^(NSString *Error) {
+    } onException:^(NSString *Exception) {
+    }];
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {

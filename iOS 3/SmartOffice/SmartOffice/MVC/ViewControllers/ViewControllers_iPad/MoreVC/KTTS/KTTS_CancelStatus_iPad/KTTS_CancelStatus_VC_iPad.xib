@@ -17,8 +17,8 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="KTTS_CancelStatus_VC_iPad">
             <connections>
                 <outlet property="btn_check_1" destination="Wf0-WX-kcD" id="OYi-5d-xkM"/>
-                <outlet property="btn_check_2" destination="YLf-zV-hYi" id="i6R-Bv-TuY"/>
-                <outlet property="btn_check_3" destination="Mpa-xg-NzU" id="9dh-9B-oIV"/>
+                <outlet property="btn_check_2" destination="Mpa-xg-NzU" id="tS5-aq-IAQ"/>
+                <outlet property="btn_check_3" destination="YLf-zV-hYi" id="NuC-bi-teA"/>
                 <outlet property="lbl_Title" destination="8t0-xB-Frj" id="V9g-1P-s9K"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -111,7 +111,7 @@
                                 <color key="titleColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
                             </state>
                             <connections>
-                                <action selector="actionCheck_3:" destination="-1" eventType="touchUpInside" id="Arz-wc-rF9"/>
+                                <action selector="actionCheck_2:" destination="-1" eventType="touchUpInside" id="7Mz-rb-1OQ"/>
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ssu-ZD-1vx">
@@ -125,9 +125,13 @@
                                 <color key="titleColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
                             </state>
                             <connections>
-                                <action selector="actionCheck_2:" destination="-1" eventType="touchUpInside" id="30N-8v-Vdk"/>
+                                <action selector="actionCheck_3:" destination="-1" eventType="touchUpInside" id="gSa-fW-rHR"/>
                             </connections>
                         </button>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rWE-h5-XLY">
+                            <rect key="frame" x="268" y="1" width="32" height="32"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        </view>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wf0-WX-kcD">
                             <rect key="frame" x="268" y="1" width="32" height="32"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -136,6 +140,10 @@
                             </constraints>
                             <state key="normal" image="checkMark.png"/>
                         </button>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3LX-E7-xc2">
+                            <rect key="frame" x="268" y="34" width="32" height="32"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        </view>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mpa-xg-NzU">
                             <rect key="frame" x="268" y="34" width="32" height="32"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -144,6 +152,10 @@
                             </constraints>
                             <state key="normal" image="checkMark.png"/>
                         </button>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DWz-J6-RGL">
+                            <rect key="frame" x="268" y="67" width="32" height="32"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        </view>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YLf-zV-hYi">
                             <rect key="frame" x="268" y="67" width="32" height="32"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -155,6 +167,7 @@
                     </subviews>
                     <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
+                        <constraint firstItem="Mpa-xg-NzU" firstAttribute="leading" secondItem="3LX-E7-xc2" secondAttribute="leading" id="9vj-6R-jTR"/>
                         <constraint firstItem="Mpa-xg-NzU" firstAttribute="top" secondItem="Wf0-WX-kcD" secondAttribute="bottom" constant="1" id="AZC-Ki-LbZ"/>
                         <constraint firstAttribute="trailing" secondItem="Mpa-xg-NzU" secondAttribute="trailing" id="BRZ-Cf-wWE"/>
                         <constraint firstItem="YLf-zV-hYi" firstAttribute="top" secondItem="Mpa-xg-NzU" secondAttribute="bottom" constant="1" id="Hfg-FL-DgI"/>
@@ -168,11 +181,22 @@
                         <constraint firstItem="Wf0-WX-kcD" firstAttribute="leading" secondItem="m9Z-fc-LpH" secondAttribute="trailing" id="S0N-Vu-jW2"/>
                         <constraint firstAttribute="trailing" secondItem="Ssu-ZD-1vx" secondAttribute="trailing" constant="32" id="SYQ-jH-HQU"/>
                         <constraint firstItem="eWS-u5-nfE" firstAttribute="leading" secondItem="ehJ-OG-AFX" secondAttribute="leading" id="To7-GP-w9q"/>
+                        <constraint firstItem="YLf-zV-hYi" firstAttribute="bottom" secondItem="DWz-J6-RGL" secondAttribute="bottom" id="TxX-Ff-cLJ"/>
+                        <constraint firstItem="Mpa-xg-NzU" firstAttribute="bottom" secondItem="3LX-E7-xc2" secondAttribute="bottom" id="Uaq-WX-Evr"/>
+                        <constraint firstItem="YLf-zV-hYi" firstAttribute="leading" secondItem="DWz-J6-RGL" secondAttribute="leading" id="V7C-52-fLZ"/>
                         <constraint firstItem="eWS-u5-nfE" firstAttribute="top" secondItem="m9Z-fc-LpH" secondAttribute="bottom" constant="1" id="VB6-ai-ifh"/>
+                        <constraint firstItem="YLf-zV-hYi" firstAttribute="trailing" secondItem="DWz-J6-RGL" secondAttribute="trailing" id="VhC-Wh-IWb"/>
+                        <constraint firstItem="Wf0-WX-kcD" firstAttribute="bottom" secondItem="rWE-h5-XLY" secondAttribute="bottom" id="WU3-ee-ibh"/>
+                        <constraint firstItem="Mpa-xg-NzU" firstAttribute="top" secondItem="3LX-E7-xc2" secondAttribute="top" id="X52-bU-a9m"/>
+                        <constraint firstItem="Wf0-WX-kcD" firstAttribute="leading" secondItem="rWE-h5-XLY" secondAttribute="leading" id="Yga-XA-itZ"/>
                         <constraint firstAttribute="trailing" secondItem="YLf-zV-hYi" secondAttribute="trailing" id="cBK-bN-Hol"/>
+                        <constraint firstItem="YLf-zV-hYi" firstAttribute="top" secondItem="DWz-J6-RGL" secondAttribute="top" id="eeX-Ft-mZ0"/>
                         <constraint firstItem="m9Z-fc-LpH" firstAttribute="leading" secondItem="ehJ-OG-AFX" secondAttribute="leading" id="h93-I6-eNs"/>
                         <constraint firstItem="YLf-zV-hYi" firstAttribute="leading" secondItem="Ssu-ZD-1vx" secondAttribute="trailing" id="iVb-lr-T1k"/>
+                        <constraint firstItem="Mpa-xg-NzU" firstAttribute="trailing" secondItem="3LX-E7-xc2" secondAttribute="trailing" id="oOD-An-nRf"/>
+                        <constraint firstItem="Wf0-WX-kcD" firstAttribute="trailing" secondItem="rWE-h5-XLY" secondAttribute="trailing" id="qiD-c2-jil"/>
                         <constraint firstItem="Wf0-WX-kcD" firstAttribute="top" secondItem="ehJ-OG-AFX" secondAttribute="top" constant="1" id="x4H-HP-GZF"/>
+                        <constraint firstItem="Wf0-WX-kcD" firstAttribute="top" secondItem="rWE-h5-XLY" secondAttribute="top" id="ycS-7s-TcR"/>
                     </constraints>
                 </view>
             </subviews>

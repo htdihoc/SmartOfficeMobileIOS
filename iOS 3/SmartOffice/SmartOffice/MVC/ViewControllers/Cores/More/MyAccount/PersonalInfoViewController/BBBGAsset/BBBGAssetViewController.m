@@ -90,6 +90,15 @@
     
     self.search_view.delegate = self;
     [self countData];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(acceptOrRefuseActionNotification:)
+                                                 name:@"AcceptOrRefuseActionNotification"
+                                               object:nil];
+}
+
+- (void) acceptOrRefuseActionNotification:(NSNotification *) notification
+{
+    [self countData];
 }
 
 - (void) countData {
@@ -297,12 +306,52 @@
     [self.navigationController pushViewController:propertyDetails animated:YES];
 }
 
+//cancel thì   params.put("idBBBGTSCN", idBBBG);
+//params.put("reason", reason);
+//params.put("type", 2);
+
 - (IBAction)btnRefuseAction:(id)sender {
-    
+    NSDictionary *parameter = @{
+                                @"idBBBGTSCN": self.id_BBBG_detail,
+                                @"type": @"2",
+                                @"type": self.bbbgModelAsset.description
+                                };
+    [KTTSProcessor postKTTS_CANCEL_TTTS:parameter handle:^(id result, NSString *error) {
+        [[NSNotificationCenter defaultCenter]
+         postNotificationName:@"AcceptOrRefuseActionNotification"
+         object:self];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Thông báo" message:@"Từ chối thành công." delegate:self cancelButtonTitle:@"Đóng" otherButtonTitles:nil, nil];
+        [alert show];
+    } onError:^(NSString *Error) {
+        [self showAlertFailure:@"Có lỗi xảy ra. Vui lòng kiểm tra lại."];
+    } onException:^(NSString *Exception) {
+        [self showAlertFailure:@"Mất kết nối mạng"];
+    }];
 }
 
 - (IBAction)btnAcceptAction:(id)sender {
-    
+    NSDictionary *parameter = @{
+                                @"idBBBGTSCN": self.id_BBBG_detail,
+                                @"type": @"1",
+                                @"type": self.bbbgModelAsset.description
+                                };
+    [KTTSProcessor postKTTS_CANCEL_TTTS:parameter handle:^(id result, NSString *error) {
+        [[NSNotificationCenter defaultCenter]
+         postNotificationName:@"AcceptOrRefuseActionNotification"
+         object:self];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Thông báo" message:@"Xác nhận thành công." delegate:self cancelButtonTitle:@"Đóng" otherButtonTitles:nil, nil];
+        [alert show];
+    } onError:^(NSString *Error) {
+        [self showAlertFailure:@"Có lỗi xảy ra. Vui lòng kiểm tra lại."];
+    } onException:^(NSString *Exception) {
+        [self showAlertFailure:@"Mất kết nối mạng"];
+    }];
 }
+
+- (void) showAlertFailure:(NSString *)mess {
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Thông báo" message: mess delegate:self cancelButtonTitle:@"Đóng" otherButtonTitles:nil, nil];
+    [alert show];
+}
+
 @end
 
