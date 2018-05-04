@@ -8,6 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
+@class BBBGAssetCell;
+@protocol BBBGAssetCellDelegate <NSObject>
+
+- (void) customCell:(BBBGAssetCell *)cell button1Pressed:(UIButton *)btn;
+
+@end
+
 @interface BBBGAssetCell : UITableViewCell
 
 @property (weak, nonatomic) IBOutlet UIButton *btn_view_detail;
@@ -25,5 +32,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *value_status;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *heightTitleStatusConstrain;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *heightValueStatusConstrain;
+
+@property (nonatomic, assign) id<BBBGAssetCellDelegate> delegate;
 
 @end

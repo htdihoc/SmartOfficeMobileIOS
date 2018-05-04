@@ -13,7 +13,7 @@
 #import "KTTSProcessor.h"
 #import "UIAlertView+Blocks.h"
 
-@interface AssetConfirmViewController () <TTNS_BaseNavViewDelegate, UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate> {
+@interface AssetConfirmViewController () <TTNS_BaseNavViewDelegate, UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate, BBBGAssetCellDelegate> {
     BBBGAssetCell *bbbgCell;
     AssetConfirmCell *assetConfirmCell;
 }
@@ -38,7 +38,12 @@
 
 - (void) dismissKeyboard {
     [self.view endEditing:YES];
+    [assetConfirmCell.view_type closeAllComponentsAnimated:YES];
     [assetConfirmCell.datePicker removeFromSuperview];
+}
+
+- (void) customCell:(BBBGAssetCell *)cell button1Pressed:(UIButton *)btn{
+    [self didTapBackButton];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -53,7 +58,7 @@
             bbbgCell = [nib objectAtIndex:0];
         }
         bbbgCell.btn_view_detail.tag = indexPath.row;
-        
+        bbbgCell.delegate = self;
         bbbgCell.value_goods_name.text = self.value_commodity_name;
         bbbgCell.value_number.text = self.value_number;
         bbbgCell.value_serial.text = self.value_serial;
@@ -80,7 +85,7 @@
         return 480;
     }
 }
-
+    
 - (IBAction)confirmAction:(id)sender {
     NSDate *dateFromString = [NSDate new];
     NSTimeInterval timeInMiliseconds = [dateFromString timeIntervalSince1970]*1000;
@@ -92,13 +97,29 @@
         [assetConfirmCell.view_type becomeFirstResponder];
         return;
     }else if ([assetConfirmCell.text_number_not_used.text integerValue] > [self.value_number integerValue] || [assetConfirmCell.text_number_not_used.text integerValue] == 0){
-        NSString *typeString = [NSString stringWithFormat:@"Đ/c phải nhập số lượng tài sản %@ nhỏ hơn hoặc bằng số lượng đang có", assetConfirmCell.textDropDown.text];
+        NSString *stringTextDropdown = @"";
+        if([assetConfirmCell.textDropDown.text isEqual: @"Báo mất"]){
+            stringTextDropdown = @"báo mất";
+        }else if([assetConfirmCell.textDropDown.text isEqual: @"Báo hỏng"]){
+            stringTextDropdown = @"báo hỏng";
+        }else if([assetConfirmCell.textDropDown.text isEqual: @"Báo không sử dụng"]){
+            stringTextDropdown = @"báo không sử dụng";
+        }
+        NSString *typeString = [NSString stringWithFormat:@"Đ/c phải nhập số lượng tài sản %@ nhỏ hơn hoặc bằng số lượng đang có.", stringTextDropdown];
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Thông báo" message:typeString delegate:self cancelButtonTitle:nil otherButtonTitles:@"Đồng ý", nil];
         [alert show];
         [assetConfirmCell.text_number_not_used becomeFirstResponder];
         return;
     }else if(assetConfirmCell.date > dateNowInteger){
-        NSString *typeString = [NSString stringWithFormat:@"Đ/c phải nhập ngày %@ nhỏ hơn hoặc bằng ngày hiện tại", assetConfirmCell.textDropDown.text];
+        NSString *stringTextDropdown = @"";
+        if([assetConfirmCell.textDropDown.text isEqual: @"Báo mất"]){
+            stringTextDropdown = @"báo mất";
+        }else if([assetConfirmCell.textDropDown.text isEqual: @"Báo hỏng"]){
+            stringTextDropdown = @"báo hỏng";
+        }else if([assetConfirmCell.textDropDown.text isEqual: @"Báo không sử dụng"]){
+            stringTextDropdown = @"báo không sử dụng";
+        }
+        NSString *typeString = [NSString stringWithFormat:@"Đ/c phải nhập ngày %@ nhỏ hơn hoặc bằng ngày hiện tại.", stringTextDropdown];
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Thông báo" message:typeString delegate:nil cancelButtonTitle:nil otherButtonTitles:@"Đồng ý", nil];
         [alert show];
         [assetConfirmCell.dateTextField becomeFirstResponder];
@@ -197,6 +218,7 @@
 }
 
 - (void)didTapBackButton {
+    [assetConfirmCell.view_type closeAllComponentsAnimated:YES];
     [self popToMoreRoot];
 }
 

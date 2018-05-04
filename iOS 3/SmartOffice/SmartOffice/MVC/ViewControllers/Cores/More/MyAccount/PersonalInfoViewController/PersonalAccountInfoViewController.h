@@ -16,6 +16,9 @@
 @property (weak, nonatomic) IBOutlet SOSearchBarView *searchview;
 @property (weak, nonatomic) IBOutlet UILabel *label_Badge;
 @property (weak, nonatomic) IBOutlet UILabel *noResultLabel;
+@property (weak, nonatomic) IBOutlet UILabel *noResultBBBGLabel;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
+
+@property (strong, nonatomic) NSString *searchTextFieldString;
 
 @end

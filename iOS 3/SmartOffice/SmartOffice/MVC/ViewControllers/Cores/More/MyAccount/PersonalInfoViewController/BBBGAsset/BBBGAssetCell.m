@@ -18,7 +18,12 @@
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
 
-    
+}
+
+- (IBAction)watchDetailAction:(id)sender {
+    if (self.delegate && [self.delegate respondsToSelector:@selector(customCell:button1Pressed:)]) {
+        [self.delegate customCell:self button1Pressed:sender];
+    }
 }
 
 @end

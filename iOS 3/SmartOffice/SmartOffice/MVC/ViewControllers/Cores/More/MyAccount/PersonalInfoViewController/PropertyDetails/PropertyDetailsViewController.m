@@ -70,6 +70,19 @@ typedef NS_ENUM(NSInteger, Status) {
     self.backTitle = @"Chi tiết tài sản";
     self.propertyDetailsTableView.estimatedRowHeight = 445;
     self.propertyDetailsTableView.rowHeight = UITableViewAutomaticDimension;
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if ([self.value_status rangeOfString:@"KSD"].location != NSNotFound) {
+            self.typeCancel = 3;
+        } else if ([self.value_status rangeOfString:@"mất"].location != NSNotFound) {
+            self.typeCancel = 1;
+        } else if ([self.value_status rangeOfString:@"hỏng"].location != NSNotFound) {
+            self.typeCancel = 2;
+        } else {
+            self.typeCancel = 0;
+        }
+    });
+    
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -146,22 +159,64 @@ typedef NS_ENUM(NSInteger, Status) {
 }
 
 - (void)actionShowCancelStatusVC {
-    KTTS_CancelStatus_VC_iPad *vc = NEW_VC_FROM_NIB(KTTS_CancelStatus_VC_iPad, @"KTTS_CancelStatus_VC_iPad");
-    vc.merEntityId = IntToString(self.merEntityId);
-    vc.strStatus = self.value_status;
     
-    MZFormSheetController *formSheet = [[MZFormSheetController alloc] initWithViewController:vc];
+    if ((([self.value_status rangeOfString:@"KSD"].location != NSNotFound) && ([self.value_status rangeOfString:@"mất"].location == NSNotFound) && ([self.value_status rangeOfString:@"hỏng"].location == NSNotFound)) || (([self.value_status rangeOfString:@"KSD"].location == NSNotFound) && ([self.value_status rangeOfString:@"mất"].location != NSNotFound) && ([self.value_status rangeOfString:@"hỏng"].location == NSNotFound)) || (([self.value_status rangeOfString:@"KSD"].location == NSNotFound) && ([self.value_status rangeOfString:@"mất"].location == NSNotFound) && ([self.value_status rangeOfString:@"hỏng"].location != NSNotFound))) {
+        UIAlertController * alert = [UIAlertController
+                                     alertControllerWithTitle:@"Xác nhận"
+                                     message:@"Đ/c có chắc chắn muốn hủy thông báo?"
+                                     preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction* yesButton = [UIAlertAction
+                                    actionWithTitle:@"Xác nhận"
+                                    style:UIAlertActionStyleDefault
+                                    handler:^(UIAlertAction * action) {
+                                        NSDictionary *parameter = @{
+                                                                    @"merEntityId": IntToString(self.merEntityId),
+                                                                    @"type": IntToString(self.typeCancel)
+                                                                    };
+                                        [KTTSProcessor postKTTS_CANCEL_TTTS:parameter handle:^(id result, NSString *error) {
+                                            [[NSNotificationCenter defaultCenter]
+                                             postNotificationName:@"CancelSucessNotification"
+                                             object:self];
+                                            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Thông báo" message:@"Hủy thành công." delegate:self cancelButtonTitle:@"Đóng" otherButtonTitles:nil, nil];
+                                            [alert show];
+                                        } onError:^(NSString *Error) {
+                                            [self showAlertFailure:@"Có lỗi xảy ra. Vui lòng kiểm tra lại."];
+                                        } onException:^(NSString *Exception) {
+                                            [self showAlertFailure:@"Mất kết nối mạng"];
+                                        }];
+                                    }];
+        UIAlertAction* noButton = [UIAlertAction
+                                   actionWithTitle:@"Đóng"
+                                   style:UIAlertActionStyleCancel
+                                   handler:^(UIAlertAction * action) {
+                                       //
+                                   }];
+        [alert addAction:noButton];
+        [alert addAction:yesButton];
+        [self presentViewController:alert animated:YES completion:nil];
+    }else {
+        KTTS_CancelStatus_VC_iPad *vc = NEW_VC_FROM_NIB(KTTS_CancelStatus_VC_iPad, @"KTTS_CancelStatus_VC_iPad");
+        vc.merEntityId = IntToString(self.merEntityId);
+        vc.strStatus = self.value_status;
     
-    formSheet.presentedFormSheetSize = CGSizeMake(SCREEN_HEIGHT_LANDSCAPE-40, 200);
-    //    formSheet.transitionStyle = MZFormSheetTransitionStyleSlideFromTop;
-    formSheet.shadowRadius = 2.0;
-    formSheet.shadowOpacity = 0.3;
-    formSheet.cornerRadius = 12;
-    formSheet.shouldDismissOnBackgroundViewTap = NO;
-    formSheet.shouldCenterVertically = YES;
-    formSheet.movementWhenKeyboardAppears = MZFormSheetWhenKeyboardAppearsCenterVertically;
-    [self mz_presentFormSheetController:formSheet animated:YES completionHandler:^(MZFormSheetController *formSheetController) {
-    }];
+        MZFormSheetController *formSheet = [[MZFormSheetController alloc] initWithViewController:vc];
+    
+        formSheet.presentedFormSheetSize = CGSizeMake(SCREEN_HEIGHT_LANDSCAPE-40, 200);
+        //    formSheet.transitionStyle = MZFormSheetTransitionStyleSlideFromTop;
+        formSheet.shadowRadius = 2.0;
+        formSheet.shadowOpacity = 0.3;
+        formSheet.cornerRadius = 12;
+        formSheet.shouldDismissOnBackgroundViewTap = NO;
+        formSheet.shouldCenterVertically = YES;
+        formSheet.movementWhenKeyboardAppears = MZFormSheetWhenKeyboardAppearsCenterVertically;
+        [self mz_presentFormSheetController:formSheet animated:YES completionHandler:^(MZFormSheetController *formSheetController) {
+        }];
+    }
+}
+
+- (void) showAlertFailure:(NSString *)mess {
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Thông báo" message: mess delegate:self cancelButtonTitle:@"Đóng" otherButtonTitles:nil, nil];
+    [alert show];
 }
 
 - (void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {

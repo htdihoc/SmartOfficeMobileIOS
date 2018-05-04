@@ -67,15 +67,39 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6jK-o5-QwQ">
+                                <rect key="frame" x="285" y="0.0" width="90" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="90" id="yXv-qI-PxO"/>
+                                </constraints>
+                                <state key="normal" title="Xem chi tiết">
+                                    <color key="titleColor" red="0.38431372549999998" green="0.38431372549999998" blue="0.38431372549999998" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="watchDetailAction:" destination="o5N-wn-cQI" eventType="touchUpInside" id="r1z-tZ-SF4"/>
+                                </connections>
+                            </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="detail_info" translatesAutoresizingMaskIntoConstraints="NO" id="gte-mt-9he">
+                                <rect key="frame" x="267" y="8" width="18" height="18"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="18" id="UxY-AT-5Hi"/>
+                                    <constraint firstAttribute="height" constant="18" id="bGB-eY-9ug"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="Cvt-dw-Dlc" secondAttribute="trailing" id="0NW-1d-S4j"/>
+                            <constraint firstItem="6jK-o5-QwQ" firstAttribute="leading" secondItem="gte-mt-9he" secondAttribute="trailing" id="17c-nF-7mR"/>
                             <constraint firstItem="oxF-mT-aQh" firstAttribute="leading" secondItem="7NR-NF-LhA" secondAttribute="leading" constant="-20" id="5CA-DX-cQH"/>
                             <constraint firstItem="mOK-6q-SG4" firstAttribute="top" secondItem="7NR-NF-LhA" secondAttribute="top" id="9IV-Yi-1fN"/>
                             <constraint firstAttribute="bottom" secondItem="Cvt-dw-Dlc" secondAttribute="bottom" id="LIp-CN-Kln"/>
                             <constraint firstItem="oxF-mT-aQh" firstAttribute="centerY" secondItem="7NR-NF-LhA" secondAttribute="centerY" id="Nov-uo-KlZ"/>
                             <constraint firstAttribute="height" constant="35" id="WZa-Vn-pNu"/>
+                            <constraint firstItem="Cvt-dw-Dlc" firstAttribute="top" secondItem="6jK-o5-QwQ" secondAttribute="bottom" constant="4" id="hZc-fe-FKF"/>
+                            <constraint firstItem="gte-mt-9he" firstAttribute="top" secondItem="mOK-6q-SG4" secondAttribute="bottom" constant="7" id="iit-4G-Xrr"/>
+                            <constraint firstItem="6jK-o5-QwQ" firstAttribute="top" secondItem="7NR-NF-LhA" secondAttribute="top" id="okN-N0-G4i"/>
+                            <constraint firstAttribute="trailing" secondItem="6jK-o5-QwQ" secondAttribute="trailing" id="roS-cS-EAs"/>
                             <constraint firstAttribute="trailing" secondItem="mOK-6q-SG4" secondAttribute="trailing" id="sbK-1y-qcL"/>
                             <constraint firstItem="Cvt-dw-Dlc" firstAttribute="leading" secondItem="7NR-NF-LhA" secondAttribute="leading" id="t6c-vr-l03"/>
                             <constraint firstItem="mOK-6q-SG4" firstAttribute="leading" secondItem="7NR-NF-LhA" secondAttribute="leading" id="u2s-aX-iyV"/>
@@ -203,4 +227,7 @@
             <point key="canvasLocation" x="109.5" y="85"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="detail_info" width="44" height="44"/>
+    </resources>
 </document>
