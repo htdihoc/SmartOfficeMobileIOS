@@ -39,11 +39,13 @@
 @property (strong, nonatomic) NSArray *filterDataBBBGArr;
 @property (strong, nonatomic) NSMutableArray *data_TTTS, *data_BBBG;
 @property (assign, nonatomic) NSInteger countTTTS, countBBBG;
+@property (assign, nonatomic) NSInteger countTTTSClearText, countBBBGClearText;
 @property (nonatomic) bool isloadmoreTTTS, isloadmoreBBBG;
 @property (assign, nonatomic) NSInteger startTTTS, startBBBG, limit;
 @property (strong, nonatomic) NSArray *data_FilterTTTS, *data_FilterBBBG;
 @property (strong, nonatomic) NSMutableArray *data_TTTS_First, *data_BBBG_First;
 @property (nonatomic) BOOL isFiltered;
+@property (assign, nonatomic) NSInteger filteredInt;
 
 @end
 
@@ -56,14 +58,20 @@
     self.searchview.searchBar.placeholder = LocalizedString(@"SearchSerial...");
     self.searchview.searchBar.font = [UIFont italicSystemFontOfSize:14.0f];
     self.noResultLabel.hidden = YES;
-    self.noResultBBBGLabel.hidden = YES;
     
     self.startTTTS = 0;
     self.startBBBG = 0;
+    self.countTTTSClearText = 0;
+    self.countBBBGClearText = 0;
+    self.filteredInt = 0;
+    
     self.limit = 20;
     self.isloadmoreTTTS = true;
     self.isloadmoreBBBG = true;
     [self initErrorView];
+    
+    self.searchTextFieldBBBGString = @"";
+    self.searchTextFieldTTTSString = @"";
     
     self.label_Badge.clipsToBounds = YES;
     self.label_Badge.layer.cornerRadius = 10;
@@ -90,31 +98,6 @@
     [[Common shareInstance] showCustomHudInView:self.view];
     [self reloadAllData];
     
-    [self.dataBBBGArr removeAllObjects];
-    
-    NSDictionary *parameter = @{
-                                @"employeeId": @"102026",
-                                @"start": IntToString(self.startBBBG),
-                                @"keyword": self.searchview.text,
-                                @"limit": IntToString(1000)
-                                };
-    [KTTSProcessor postKTTS_BBBG:parameter handle:^(id result, NSString *error) {
-        NSArray *array = result[@"listMinuteHandOver"];
-        
-        [self.dataBBBGArr addObjectsFromArray:array];
-        NSPredicate *p = [NSPredicate predicateWithFormat:@"status = %d", 0];
-        
-        self.filterDataBBBGArr = [self.dataBBBGArr filteredArrayUsingPredicate:p];
-        self.label_Badge.text = [NSString stringWithFormat:@"%lu", (unsigned long)self.filterDataBBBGArr.count];
-        if(self.filterDataBBBGArr.count == 0){
-            self.label_Badge.hidden = YES;
-        }else {
-            self.label_Badge.hidden = NO;
-        }
-    } onError:^(NSString *Error) {
-    } onException:^(NSString *Exception) {
-    }];
-    
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(cancelSucessNotification:)
                                                  name:@"CancelSucessNotification"
@@ -127,25 +110,38 @@
 
 - (void) acceptOrRefuseActionNotification:(NSNotification *) notification
 {
-
-}
-
-- (void) cancelSucessNotification:(NSNotification *) notification
-{
-    [self reloadAllData];
+    self.startTTTS = 0;
+    self.startBBBG = 0;
+    self.limit = 20;
+    
     [self.dataBBBGArr removeAllObjects];
-
+    [self.TTTS_data_array removeAllObjects];
+    [self.BBBG_data_array removeAllObjects];
+    [self.data_TTTS removeAllObjects];
+    [self.data_BBBG removeAllObjects];
+    NSArray *tttsArray = [NSArray new];
+    NSArray *bbbgArray = [NSArray new];
+    self.data_FilterTTTS = tttsArray;
+    self.data_FilterBBBG = bbbgArray;
+    [self.data_BBBG_First removeAllObjects];
+    [self.data_TTTS_First removeAllObjects];
+    [self countDataTTTS];
+    [self countDataBBBG];
+    
+    [self.dataBBBGArr removeAllObjects];
+    
     NSDictionary *parameter = @{
                                 @"employeeId": @"102026",
                                 @"start": IntToString(self.startBBBG),
-                                @"keyword": self.searchview.text,
+                                @"keyword": self.searchTextFieldBBBGString,
                                 @"limit": IntToString(1000)
                                 };
     [KTTSProcessor postKTTS_BBBG:parameter handle:^(id result, NSString *error) {
         NSArray *array = result[@"listMinuteHandOver"];
-
+        
         [self.dataBBBGArr addObjectsFromArray:array];
         NSPredicate *p = [NSPredicate predicateWithFormat:@"status = %d", 0];
+        
         self.filterDataBBBGArr = [self.dataBBBGArr filteredArrayUsingPredicate:p];
         self.label_Badge.text = [NSString stringWithFormat:@"%lu", (unsigned long)self.filterDataBBBGArr.count];
         if(self.filterDataBBBGArr.count == 0){
@@ -156,7 +152,52 @@
     } onError:^(NSString *Error) {
     } onException:^(NSString *Exception) {
     }];
-    [self.bbbgAssetsTableView reloadData];
+}
+
+- (void) cancelSucessNotification:(NSNotification *) notification
+{
+    self.startTTTS = 0;
+    self.startBBBG = 0;
+    self.limit = 20;
+    
+    [self.dataBBBGArr removeAllObjects];
+    [self.TTTS_data_array removeAllObjects];
+    [self.BBBG_data_array removeAllObjects];
+    [self.data_TTTS removeAllObjects];
+    [self.data_BBBG removeAllObjects];
+    NSArray *tttsArray = [NSArray new];
+    NSArray *bbbgArray = [NSArray new];
+    self.data_FilterTTTS = tttsArray;
+    self.data_FilterBBBG = bbbgArray;
+    [self.data_BBBG_First removeAllObjects];
+    [self.data_TTTS_First removeAllObjects];
+    [self countDataTTTS];
+    [self countDataBBBG];
+    
+    [self.dataBBBGArr removeAllObjects];
+    
+    NSDictionary *parameter = @{
+                                @"employeeId": @"102026",
+                                @"start": IntToString(self.startBBBG),
+                                @"keyword": self.searchTextFieldBBBGString,
+                                @"limit": IntToString(1000)
+                                };
+    [KTTSProcessor postKTTS_BBBG:parameter handle:^(id result, NSString *error) {
+        NSArray *array = result[@"listMinuteHandOver"];
+        
+        [self.dataBBBGArr addObjectsFromArray:array];
+        NSPredicate *p = [NSPredicate predicateWithFormat:@"status = %d", 0];
+        
+        self.filterDataBBBGArr = [self.dataBBBGArr filteredArrayUsingPredicate:p];
+        self.label_Badge.text = [NSString stringWithFormat:@"%lu", (unsigned long)self.filterDataBBBGArr.count];
+        if(self.filterDataBBBGArr.count == 0){
+            self.label_Badge.hidden = YES;
+        }else {
+            self.label_Badge.hidden = NO;
+        }
+    } onError:^(NSString *Error) {
+    } onException:^(NSString *Exception) {
+    }];
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
@@ -195,16 +236,20 @@
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     switch (self.switchScreen) {
         case 0:
+            self.searchTextFieldTTTSString = textField.text;
             self.startTTTS = 0;
             [self.TTTS_data_array removeAllObjects];
-            [self getDataTTTS];
+//            [self getDataTTTS];
+            [self countDataTTTS];
             [self dismissKeyboard];
             return YES;
             break;
         case 1:
+            self.searchTextFieldBBBGString = textField.text;
             self.startBBBG = 0;
             [self.BBBG_data_array removeAllObjects];
-            [self getDataBBBG];
+//            [self getDataBBBG];
+            [self countDataBBBG];
             [self dismissKeyboard];
             return YES;
             break;
@@ -219,18 +264,26 @@
 - (void)textField:(UITextField *)textField textDidChange:(NSString *)searchText {
     NSString *tmpSearchText = [searchText stringByTrimmingCharactersInSet:
                                [NSCharacterSet whitespaceCharacterSet]];
-    [self searchlocalwith:tmpSearchText];
+    if (self.switchScreen == 0) {
+        self.searchTextFieldTTTSString = tmpSearchText;
+        [self searchlocalwith:self.searchTextFieldTTTSString];
+    }else {
+        self.searchTextFieldBBBGString = tmpSearchText;
+        [self searchlocalwith:self.searchTextFieldBBBGString];
+    }
+    
 }
 
 - (void) searchlocalwith:(NSString *)searchText {
+    
     switch (self.switchScreen) {
         case 0:
         {
-            if (searchText.length == 0) {
+            if (self.searchTextFieldTTTSString.length == 0 && self.filteredInt == 0) {
                 _isFiltered = NO;
                 [self.infoAssetsTableView reloadData];
 //                [self.bbbgAssetsTableView reloadData];
-                self.total_record.text = IntToString(self.countTTTS);
+                self.total_record.text = IntToString(self.countTTTSClearText);
                 
                 if (self.countTTTS > 0) {
                     self.noResultLabel.hidden = YES;
@@ -251,19 +304,20 @@
                     self.noResultLabel.hidden = NO;
                 }
             }
+            self.filteredInt = 0;
         }
             break;
         case 1:
         {
-            if (searchText.length == 0) {
+            if (self.searchTextFieldBBBGString.length == 0 && self.filteredInt == 0) {
                 _isFiltered = NO;
 //                [self.infoAssetsTableView reloadData];
                 [self.bbbgAssetsTableView reloadData];
-                self.total_record.text = IntToString(self.countBBBG);
+                self.total_record.text = IntToString(self.countBBBGClearText);
                 if (self.countBBBG > 0) {
-                    self.noResultBBBGLabel.hidden = YES;
+                    self.noResultLabel.hidden = YES;
                 }else{
-                    self.noResultBBBGLabel.hidden = NO;
+                    self.noResultLabel.hidden = NO;
                 }
             } else {
                 _isFiltered = YES;
@@ -273,11 +327,12 @@
                 [self.bbbgAssetsTableView reloadData];
                 self.total_record.text = [NSString stringWithFormat:@"%lu", (unsigned long)self.data_FilterBBBG.count];
                 if (self.data_FilterBBBG.count > 0) {
-                    self.noResultBBBGLabel.hidden = YES;
+                    self.noResultLabel.hidden = YES;
                 }else{
-                    self.noResultBBBGLabel.hidden = NO;
+                    self.noResultLabel.hidden = NO;
                 }
             }
+            self.filteredInt = 0;
         }
         default:
             break;
@@ -290,7 +345,7 @@
     NSDictionary *parameter = @{
                                 @"employeeId": @"102026",
                                 @"start": IntToString(self.startBBBG),
-                                @"keyword": self.searchview.text,
+                                @"keyword": self.searchTextFieldBBBGString,
                                 @"limit": IntToString(1000)
                                 };
     [KTTSProcessor postKTTS_BBBG:parameter handle:^(id result, NSString *error) {
@@ -307,9 +362,9 @@
         [self.bbbgAssetsTableView reloadData];
         self.total_record.text = [NSString stringWithFormat:@"%lu", (unsigned long)self.data_FilterBBBG.count];
         if (self.data_FilterBBBG.count > 0) {
-            self.noResultBBBGLabel.hidden = YES;
+            self.noResultLabel.hidden = YES;
         }else{
-            self.noResultBBBGLabel.hidden = NO;
+            self.noResultLabel.hidden = NO;
         }
         
         [self.bbbgAssetsTableView reloadData];
@@ -370,6 +425,7 @@
 }
 
 - (void)didSelectedFilterVC:(ContentFilterVC *)filterVC withFilterType:(NSInteger)filterType {
+    self.filteredInt = 1;
     switch (self.switchScreen) {
         case 0:
         {
@@ -458,6 +514,31 @@
 }
 
 - (void) reloadAllData {
+    
+    [self.dataBBBGArr removeAllObjects];
+    NSDictionary *parameter = @{
+                                @"employeeId": @"102026",
+                                @"start": IntToString(self.startBBBG),
+                                @"keyword": self.searchTextFieldBBBGString,
+                                @"limit": IntToString(1000)
+                                };
+    [KTTSProcessor postKTTS_BBBG:parameter handle:^(id result, NSString *error) {
+        NSArray *array = result[@"listMinuteHandOver"];
+        
+        [self.dataBBBGArr addObjectsFromArray:array];
+        NSPredicate *p = [NSPredicate predicateWithFormat:@"status = %d", 0];
+        
+        self.filterDataBBBGArr = [self.dataBBBGArr filteredArrayUsingPredicate:p];
+        self.label_Badge.text = [NSString stringWithFormat:@"%lu", (unsigned long)self.filterDataBBBGArr.count];
+        if(self.filterDataBBBGArr.count == 0){
+            self.label_Badge.hidden = YES;
+        }else {
+            self.label_Badge.hidden = NO;
+        }
+    } onError:^(NSString *Error) {
+    } onException:^(NSString *Exception) {
+    }];
+    
     [self countDataTTTS];
     [self countDataBBBG];
 }
@@ -471,6 +552,7 @@
     [KTTSProcessor postCountDataTTTS:parameter handle:^(id result, NSString *error) {
         [[Common shareInstance] dismissCustomHUD];
         self.countTTTS = [result[@"return"] integerValue];
+        self.countTTTSClearText = [result[@"return"] integerValue];
         self.infoAssetsTableView.hidden = NO;
         [self getDataTTTS];
     } onError:^(NSString *Error) {
@@ -486,7 +568,7 @@
     NSDictionary *parameters = @{
                                 @"employeeId": @"102026",
                                 @"start": IntToString(self.startBBBG),
-                                @"keyword": self.searchview.text,
+                                @"keyword": self.searchTextFieldBBBGString,
                                 @"limit": IntToString(1000)
                                 };
     [KTTSProcessor postKTTS_BBBG:parameters handle:^(id result, NSString *error) {
@@ -513,6 +595,7 @@
     [KTTSProcessor postCountDataTTTS:parameter handle:^(id result, NSString *error) {
         [[Common shareInstance] dismissCustomHUD];
         self.countBBBG = [result[@"return"] integerValue];
+        self.countBBBGClearText = [result[@"return"] integerValue];
         self.bbbgAssetsTableView.hidden = NO;
         [self getDataBBBG];
     } onError:^(NSString *Error) {
@@ -527,7 +610,7 @@
     NSDictionary *parameter = @{
                                 @"employeeId": @"102026",
                                 @"start": IntToString(self.startTTTS),
-                                @"keyword": self.searchview.searchBar.text,
+                                @"keyword": self.searchTextFieldTTTSString,
                                 @"limit": IntToString(self.limit)
                                 };
     [KTTSProcessor postKTTS_THONG_TIN_TAI_SAN:parameter handle:^(id result, NSString *error) {
@@ -550,7 +633,12 @@
             
         }
         if (self.switchScreen == 0) {
-            self.total_record.text = IntToString(self.countTTTS);
+            if(array.count == 0){
+                self.total_record.text = IntToString(0);
+            }else {
+                self.total_record.text = IntToString(self.countTTTS);
+            }
+            
             if (self.countTTTS > 0) {
                 self.noResultLabel.hidden = YES;
             } else {
@@ -570,7 +658,7 @@
     NSDictionary *parameter = @{
                                 @"employeeId": @"102026",
                                 @"start": IntToString(self.startBBBG),
-                                @"keyword": self.searchview.text,
+                                @"keyword": self.searchTextFieldBBBGString,
                                 @"limit": IntToString(self.limit)
                                 };
     [KTTSProcessor postKTTS_BBBG:parameter handle:^(id result, NSString *error) {
@@ -594,11 +682,16 @@
         }
 
         if (self.switchScreen == 1) {
-            self.total_record.text = IntToString(self.countBBBG);
+            if(array.count == 0){
+                self.total_record.text = IntToString(0);
+            }else {
+                self.total_record.text = IntToString(self.countBBBG);
+            }
+            
             if (self.countBBBG > 0) {
-                self.noResultBBBGLabel.hidden = YES;
+                self.noResultLabel.hidden = YES;
             } else {
-                self.noResultBBBGLabel.hidden = NO;
+                self.noResultLabel.hidden = NO;
             }
         }
         [self.bbbgAssetsTableView reloadData];
@@ -615,16 +708,25 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (tableView == self.infoAssetsTableView) {
-        if (_isFiltered) {
-            return self.data_FilterTTTS.count;
-        } else {
+        if (self.searchTextFieldTTTSString.length == 0) {
             return self.TTTS_data_array.count;
+        }else {
+            if (_isFiltered) {
+                return self.data_FilterTTTS.count;
+            } else {
+                return self.TTTS_data_array.count;
+            }
         }
+        
     } else if (tableView == self.bbbgAssetsTableView) {
-        if (_isFiltered) {
-            return self.data_FilterBBBG.count;
-        } else {
+        if (self.searchTextFieldBBBGString.length == 0) {
             return self.BBBG_data_array.count;
+        }else {
+            if (_isFiltered) {
+                return self.data_FilterBBBG.count;
+            } else {
+                return self.BBBG_data_array.count;
+            }
         }
     } else {
         return 0;
@@ -639,12 +741,15 @@
     personalAccInfoCell.lb_cell_number.text = IntToString(indexPath.row+1);
     
     if (tableView == self.infoAssetsTableView) {
-        if (!_isFiltered) {
-            self.data_TTTS = [PropertyInfoModel arrayOfModelsFromDictionaries:self.TTTS_data_array error:nil];
-        } else {
+        if (self.searchTextFieldTTTSString.length == 0) {
             self.data_TTTS = [PropertyInfoModel arrayOfModelsFromDictionaries:self.data_FilterTTTS error:nil];
+        }else {
+            if (!_isFiltered) {
+                self.data_TTTS = [PropertyInfoModel arrayOfModelsFromDictionaries:self.TTTS_data_array error:nil];
+            } else {
+                self.data_TTTS = [PropertyInfoModel arrayOfModelsFromDictionaries:self.data_FilterTTTS error:nil];
+            }
         }
-        
         PropertyInfoModel *propertyinfo = self.data_TTTS[indexPath.row];
         
         // title
@@ -665,12 +770,15 @@
             [self loadmoreTableView];
         }
     } else if (tableView == self.bbbgAssetsTableView) {
-        if (!_isFiltered) {
-            self.data_BBBG = [BBBGAssetModel arrayOfModelsFromDictionaries:self.BBBG_data_array error:nil];
-        } else {
+        if (self.searchTextFieldBBBGString.length == 0) {
             self.data_BBBG = [BBBGAssetModel arrayOfModelsFromDictionaries:self.data_FilterBBBG error:nil];
+        }else {
+            if (!_isFiltered) {
+                self.data_BBBG = [BBBGAssetModel arrayOfModelsFromDictionaries:self.BBBG_data_array error:nil];
+            } else {
+                self.data_BBBG = [BBBGAssetModel arrayOfModelsFromDictionaries:self.data_FilterBBBG error:nil];
+            }
         }
-        
         BBBGAssetModel *bbbg = self.data_BBBG[indexPath.row];
         
         // title
@@ -810,19 +918,30 @@
             self.switchScreen = 0;
             self.searchview.searchBar.placeholder = LocalizedString(@"SearchSerial...");
             self.searchview.searchBar.font = [UIFont italicSystemFontOfSize:14.0f];
-            if (_isFiltered) {
-                self.total_record.text = IntToString(self.data_FilterTTTS.count);
-                if (self.data_FilterTTTS.count > 0) {
-                    self.noResultLabel.hidden = YES;
-                } else {
-                    self.noResultLabel.hidden = NO;
-                }
-            } else {
+            self.searchview.text = self.searchTextFieldTTTSString;
+            if (self.searchTextFieldTTTSString.length == 0) {
                 self.total_record.text = IntToString(self.countTTTS);
                 if (self.countTTTS > 0) {
                     self.noResultLabel.hidden = YES;
                 } else {
                     self.noResultLabel.hidden = NO;
+                }
+                self.infoAssetsTableView.hidden = NO;
+            }else {
+                if (_isFiltered) {
+                    self.total_record.text = IntToString(self.data_FilterTTTS.count);
+                    if (self.data_FilterTTTS.count > 0) {
+                        self.noResultLabel.hidden = YES;
+                    } else {
+                        self.noResultLabel.hidden = NO;
+                    }
+                } else {
+                    self.total_record.text = IntToString(self.countTTTS);
+                    if (self.countTTTS > 0) {
+                        self.noResultLabel.hidden = YES;
+                    } else {
+                        self.noResultLabel.hidden = NO;
+                    }
                 }
             }
             [self.infoAssetsTableView reloadData];
@@ -840,19 +959,30 @@
             self.switchScreen = 1;
             self.searchview.searchBar.placeholder = LocalizedString(@"SearchCodeBBBG");
             self.searchview.searchBar.font = [UIFont italicSystemFontOfSize:14.0f];
-            if (_isFiltered) {
-                self.total_record.text = IntToString(self.data_FilterBBBG.count);
-                if (self.data_FilterBBBG.count > 0) {
-                    self.noResultBBBGLabel.hidden = YES;
-                } else {
-                    self.noResultBBBGLabel.hidden = NO;
-                }
-            } else {
+            self.searchview.text = self.searchTextFieldBBBGString;
+            if (self.searchTextFieldBBBGString.length == 0) {
+                self.bbbgAssetsTableView.hidden = NO;
                 self.total_record.text = IntToString(self.countBBBG);
                 if (self.countBBBG > 0) {
-                    self.noResultBBBGLabel.hidden = YES;
+                    self.noResultLabel.hidden = YES;
                 } else {
-                    self.noResultBBBGLabel.hidden = NO;
+                    self.noResultLabel.hidden = NO;
+                }
+            }else {
+                if (_isFiltered) {
+                    self.total_record.text = IntToString(self.data_FilterBBBG.count);
+                    if (self.data_FilterBBBG.count > 0) {
+                        self.noResultLabel.hidden = YES;
+                    } else {
+                        self.noResultLabel.hidden = NO;
+                    }
+                } else {
+                    self.total_record.text = IntToString(self.countBBBG);
+                    if (self.countBBBG > 0) {
+                        self.noResultLabel.hidden = YES;
+                    } else {
+                        self.noResultLabel.hidden = NO;
+                    }
                 }
             }
             [self.bbbgAssetsTableView reloadData];

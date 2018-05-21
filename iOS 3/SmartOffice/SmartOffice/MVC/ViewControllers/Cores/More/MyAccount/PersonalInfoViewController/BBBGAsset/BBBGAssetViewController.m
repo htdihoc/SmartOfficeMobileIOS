@@ -314,9 +314,9 @@
     NSDictionary *parameter = @{
                                 @"idBBBGTSCN": self.id_BBBG_detail,
                                 @"type": @"2",
-                                @"type": self.bbbgModelAsset.description
+                                @"reason": self.bbbgModelAsset.description
                                 };
-    [KTTSProcessor postKTTS_CANCEL_TTTS:parameter handle:^(id result, NSString *error) {
+    [KTTSProcessor postUPDATE_IN_HAN:parameter handle:^(id result, NSString *error) {
         [[NSNotificationCenter defaultCenter]
          postNotificationName:@"AcceptOrRefuseActionNotification"
          object:self];
@@ -333,9 +333,9 @@
     NSDictionary *parameter = @{
                                 @"idBBBGTSCN": self.id_BBBG_detail,
                                 @"type": @"1",
-                                @"type": self.bbbgModelAsset.description
+                                @"reason": self.bbbgModelAsset.description
                                 };
-    [KTTSProcessor postKTTS_CANCEL_TTTS:parameter handle:^(id result, NSString *error) {
+    [KTTSProcessor postUPDATE_IN_HAN:parameter handle:^(id result, NSString *error) {
         [[NSNotificationCenter defaultCenter]
          postNotificationName:@"AcceptOrRefuseActionNotification"
          object:self];

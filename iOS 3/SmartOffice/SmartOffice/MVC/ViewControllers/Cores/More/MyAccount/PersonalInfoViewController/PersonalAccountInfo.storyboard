@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13174"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -325,15 +325,6 @@
                                                     <outlet property="delegate" destination="0xI-ik-YXO" id="Cbh-nd-691"/>
                                                 </connections>
                                             </tableView>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Không tìm thấy kết quả" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fpu-ZG-ZJb">
-                                                <rect key="frame" x="20" y="216" width="335" height="40"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="40" id="ngH-Mv-5dE"/>
-                                                </constraints>
-                                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
-                                                <nil key="textColor"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
                                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="177" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="lf1-Mu-xuF">
                                                 <rect key="frame" x="375" y="0.0" width="375" height="472"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -547,34 +538,17 @@
                                                     <outlet property="delegate" destination="0xI-ik-YXO" id="K1h-nC-QmP"/>
                                                 </connections>
                                             </tableView>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Không tìm thấy kết quả" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gdq-E2-DWZ">
-                                                <rect key="frame" x="395" y="216" width="335" height="40"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="40" id="AcR-82-2kJ"/>
-                                                </constraints>
-                                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
-                                                <nil key="textColor"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="bottom" secondItem="lf1-Mu-xuF" secondAttribute="bottom" id="5fq-Qo-YQE"/>
-                                            <constraint firstItem="lf1-Mu-xuF" firstAttribute="leading" secondItem="fpu-ZG-ZJb" secondAttribute="trailing" constant="20" id="GrG-Ru-i7Q"/>
-                                            <constraint firstAttribute="trailing" secondItem="gdq-E2-DWZ" secondAttribute="trailing" constant="20" id="PE1-V4-N69"/>
-                                            <constraint firstItem="fpu-ZG-ZJb" firstAttribute="leading" secondItem="Lc2-qb-30x" secondAttribute="leading" constant="20" id="RQH-Js-bHJ"/>
                                             <constraint firstItem="lxJ-aX-VPh" firstAttribute="top" secondItem="Lc2-qb-30x" secondAttribute="top" id="Tps-gT-PNl"/>
-                                            <constraint firstItem="lf1-Mu-xuF" firstAttribute="centerY" secondItem="gdq-E2-DWZ" secondAttribute="centerY" id="WB7-qH-KPM"/>
                                             <constraint firstAttribute="bottom" secondItem="lxJ-aX-VPh" secondAttribute="bottom" id="XcY-XZ-KXB"/>
                                             <constraint firstAttribute="trailing" secondItem="lf1-Mu-xuF" secondAttribute="trailing" id="a6W-UP-b7d"/>
                                             <constraint firstItem="lf1-Mu-xuF" firstAttribute="top" secondItem="Lc2-qb-30x" secondAttribute="top" id="dS8-zT-y5O"/>
-                                            <constraint firstItem="fpu-ZG-ZJb" firstAttribute="centerY" secondItem="lxJ-aX-VPh" secondAttribute="centerY" id="dxH-9H-vYk"/>
                                             <constraint firstItem="lf1-Mu-xuF" firstAttribute="leading" secondItem="lxJ-aX-VPh" secondAttribute="trailing" id="eOv-im-ieP"/>
-                                            <constraint firstItem="fpu-ZG-ZJb" firstAttribute="centerX" secondItem="lxJ-aX-VPh" secondAttribute="centerX" id="gfP-48-H8V"/>
                                             <constraint firstItem="lf1-Mu-xuF" firstAttribute="width" secondItem="lxJ-aX-VPh" secondAttribute="width" id="lLo-pw-kfV"/>
                                             <constraint firstItem="lxJ-aX-VPh" firstAttribute="leading" secondItem="Lc2-qb-30x" secondAttribute="leading" id="o6B-Oc-tz7"/>
-                                            <constraint firstItem="lf1-Mu-xuF" firstAttribute="centerX" secondItem="gdq-E2-DWZ" secondAttribute="centerX" id="uRY-2Y-kPG"/>
-                                            <constraint firstItem="gdq-E2-DWZ" firstAttribute="leading" secondItem="lxJ-aX-VPh" secondAttribute="trailing" constant="20" id="xMZ-hp-jRe"/>
                                         </constraints>
                                     </view>
                                 </subviews>
@@ -592,18 +566,30 @@
                                     <outlet property="delegate" destination="0xI-ik-YXO" id="cyK-0D-XYD"/>
                                 </connections>
                             </scrollView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Không tìm thấy kết quả" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fpu-ZG-ZJb">
+                                <rect key="frame" x="20" y="313" width="335" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="G4r-aq-kfY"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="0.92156862750000001" green="0.92156862750000001" blue="0.94509803920000002" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="3ld-cK-mp1" firstAttribute="top" secondItem="eZ7-4T-ow7" secondAttribute="bottom" id="0aq-4I-vLc"/>
+                            <constraint firstItem="fpu-ZG-ZJb" firstAttribute="leading" secondItem="uxJ-mA-EZ9" secondAttribute="leading" constant="20" id="1hc-26-TUv"/>
                             <constraint firstItem="EVo-fG-pN8" firstAttribute="leading" secondItem="uxJ-mA-EZ9" secondAttribute="leading" id="DgL-cG-I98"/>
                             <constraint firstAttribute="trailing" secondItem="3ld-cK-mp1" secondAttribute="trailing" id="Ijv-6r-kA0"/>
                             <constraint firstAttribute="trailing" secondItem="EVo-fG-pN8" secondAttribute="trailing" id="K0L-fr-ov2"/>
                             <constraint firstAttribute="trailing" secondItem="eZ7-4T-ow7" secondAttribute="trailing" id="OZB-fm-ZC9"/>
                             <constraint firstAttribute="trailing" secondItem="ulx-my-jsh" secondAttribute="trailing" id="Of7-zl-H68"/>
                             <constraint firstAttribute="trailing" secondItem="D2g-qM-iLh" secondAttribute="trailing" id="TqI-ME-Wj2"/>
+                            <constraint firstAttribute="trailing" secondItem="fpu-ZG-ZJb" secondAttribute="trailing" constant="20" id="Ukd-gQ-QLb"/>
                             <constraint firstItem="eZ7-4T-ow7" firstAttribute="top" secondItem="D2g-qM-iLh" secondAttribute="bottom" id="VuJ-nE-skh"/>
                             <constraint firstItem="D2g-qM-iLh" firstAttribute="leading" secondItem="uxJ-mA-EZ9" secondAttribute="leading" id="WkE-Va-bVx"/>
+                            <constraint firstItem="fpu-ZG-ZJb" firstAttribute="centerY" secondItem="uxJ-mA-EZ9" secondAttribute="centerY" id="aLv-xr-Bld"/>
                             <constraint firstItem="ulx-my-jsh" firstAttribute="leading" secondItem="uxJ-mA-EZ9" secondAttribute="leading" id="ere-8H-Rha"/>
                             <constraint firstItem="3ld-cK-mp1" firstAttribute="leading" secondItem="uxJ-mA-EZ9" secondAttribute="leading" id="fPc-UJ-qOI"/>
                             <constraint firstItem="djL-lH-Ugj" firstAttribute="top" secondItem="3ld-cK-mp1" secondAttribute="bottom" id="hJP-Oa-Hbx"/>
@@ -612,6 +598,7 @@
                             <constraint firstItem="djL-lH-Ugj" firstAttribute="top" secondItem="EVo-fG-pN8" secondAttribute="bottom" id="oIr-rF-Wgl"/>
                             <constraint firstItem="eZ7-4T-ow7" firstAttribute="leading" secondItem="uxJ-mA-EZ9" secondAttribute="leading" id="r83-qY-vsD"/>
                             <constraint firstItem="EVo-fG-pN8" firstAttribute="top" secondItem="eZ7-4T-ow7" secondAttribute="bottom" id="tRc-Xd-gxc"/>
+                            <constraint firstItem="fpu-ZG-ZJb" firstAttribute="centerX" secondItem="uxJ-mA-EZ9" secondAttribute="centerX" id="vxm-iQ-nLu"/>
                         </constraints>
                     </view>
                     <connections>
@@ -619,7 +606,6 @@
                         <outlet property="contentview" destination="3ld-cK-mp1" id="8fE-Ok-gyY"/>
                         <outlet property="infoAssetsTableView" destination="lxJ-aX-VPh" id="lAw-NI-MLB"/>
                         <outlet property="label_Badge" destination="xmV-mp-ZE4" id="p6S-6g-kTn"/>
-                        <outlet property="noResultBBBGLabel" destination="gdq-E2-DWZ" id="CT3-UY-FHH"/>
                         <outlet property="noResultLabel" destination="fpu-ZG-ZJb" id="8o1-g6-7Qd"/>
                         <outlet property="scrollView" destination="EVo-fG-pN8" id="O4e-wo-19X"/>
                         <outlet property="searchview" destination="D2g-qM-iLh" id="h4z-b9-RmQ"/>
