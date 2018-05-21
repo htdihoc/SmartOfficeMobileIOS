@@ -46,11 +46,11 @@
                                         </connections>
                                     </segmentedControl>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xmV-mp-ZE4">
-                                        <rect key="frame" x="319" y="17" width="16" height="16"/>
+                                        <rect key="frame" x="317" y="15" width="20" height="20"/>
                                         <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="16" id="4iJ-YS-6GD"/>
-                                            <constraint firstAttribute="width" constant="16" id="guR-La-H0Z"/>
+                                            <constraint firstAttribute="height" constant="20" id="4iJ-YS-6GD"/>
+                                            <constraint firstAttribute="width" constant="20" id="guR-La-H0Z"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="16"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -64,7 +64,7 @@
                                     <constraint firstItem="JNs-U5-BnH" firstAttribute="centerY" secondItem="ulx-my-jsh" secondAttribute="centerY" id="dBs-0u-yrc"/>
                                     <constraint firstAttribute="trailing" secondItem="JNs-U5-BnH" secondAttribute="trailing" constant="30" id="dRp-Vk-4g8"/>
                                     <constraint firstAttribute="height" constant="50" id="osN-Qn-jEM"/>
-                                    <constraint firstItem="xmV-mp-ZE4" firstAttribute="trailing" secondItem="JNs-U5-BnH" secondAttribute="trailing" constant="-10" id="t05-S1-Xqg"/>
+                                    <constraint firstItem="xmV-mp-ZE4" firstAttribute="trailing" secondItem="JNs-U5-BnH" secondAttribute="trailing" constant="-8" id="t05-S1-Xqg"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="D2g-qM-iLh" userLabel="SearchView" customClass="SOSearchBarView">

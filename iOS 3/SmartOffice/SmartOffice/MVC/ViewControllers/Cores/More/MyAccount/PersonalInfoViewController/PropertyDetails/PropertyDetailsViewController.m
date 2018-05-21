@@ -161,9 +161,25 @@ typedef NS_ENUM(NSInteger, Status) {
 - (void)actionShowCancelStatusVC {
     
     if ((([self.value_status rangeOfString:@"KSD"].location != NSNotFound) && ([self.value_status rangeOfString:@"mất"].location == NSNotFound) && ([self.value_status rangeOfString:@"hỏng"].location == NSNotFound)) || (([self.value_status rangeOfString:@"KSD"].location == NSNotFound) && ([self.value_status rangeOfString:@"mất"].location != NSNotFound) && ([self.value_status rangeOfString:@"hỏng"].location == NSNotFound)) || (([self.value_status rangeOfString:@"KSD"].location == NSNotFound) && ([self.value_status rangeOfString:@"mất"].location == NSNotFound) && ([self.value_status rangeOfString:@"hỏng"].location != NSNotFound))) {
+        
+        NSString *messageString1 = @"'không sử dụng'";
+        NSString *messageString2 = @"'đã mất'";
+        NSString *messageString3 = @"'đã hỏng'";
+        NSString *message = [NSString stringWithFormat:@"Đ/c có chắc chắn muốn hủy thông báo %@ đối với tài sản này?", messageString2];
+        
+        if ([self.value_status rangeOfString:@"KSD"].location != NSNotFound) {
+            message = [NSString stringWithFormat:@"Đ/c có chắc chắn muốn hủy thông báo %@ đối với tài sản này?", messageString1];
+        } else if ([self.value_status rangeOfString:@"mất"].location != NSNotFound) {
+            message = [NSString stringWithFormat:@"Đ/c có chắc chắn muốn hủy thông báo %@ đối với tài sản này?", messageString2];
+        } else if ([self.value_status rangeOfString:@"hỏng"].location != NSNotFound) {
+            message = [NSString stringWithFormat:@"Đ/c có chắc chắn muốn hủy thông báo %@ đối với tài sản này?", messageString3];
+        } else {
+            
+        }
+        
         UIAlertController * alert = [UIAlertController
                                      alertControllerWithTitle:@"Xác nhận"
-                                     message:@"Đ/c có chắc chắn muốn hủy thông báo?"
+                                     message:message
                                      preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction* yesButton = [UIAlertAction
                                     actionWithTitle:@"Xác nhận"
@@ -191,8 +207,10 @@ typedef NS_ENUM(NSInteger, Status) {
                                    handler:^(UIAlertAction * action) {
                                        //
                                    }];
+        [noButton setValue:[UIColor grayColor] forKey:@"titleTextColor"];
         [alert addAction:noButton];
         [alert addAction:yesButton];
+        alert.preferredAction = yesButton;
         [self presentViewController:alert animated:YES completion:nil];
     }else {
         KTTS_CancelStatus_VC_iPad *vc = NEW_VC_FROM_NIB(KTTS_CancelStatus_VC_iPad, @"KTTS_CancelStatus_VC_iPad");

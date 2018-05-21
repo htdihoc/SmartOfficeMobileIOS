@@ -36,6 +36,10 @@
     tap.cancelsTouchesInView = NO;
 }
 
+- (void)viewWillDisappear:(BOOL)animated{
+    [assetConfirmCell.view_type closeAllComponentsAnimated:YES];
+}
+
 - (void) dismissKeyboard {
     [self.view endEditing:YES];
     [assetConfirmCell.view_type closeAllComponentsAnimated:YES];
@@ -125,7 +129,7 @@
         [assetConfirmCell.dateTextField becomeFirstResponder];
         return;
     }else if([assetConfirmCell.tv_reason.text isEqual: @""]){
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Thông báo" message:@"Bạn chưa nhập nguyên nhân" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"Đồng ý", nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Thông báo" message:@"Đ/c chưa nhập nguyên nhân." delegate:nil cancelButtonTitle:nil otherButtonTitles:@"Đồng ý", nil];
         [alert show];
         [assetConfirmCell.tv_reason becomeFirstResponder];
         return;

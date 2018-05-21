@@ -66,7 +66,7 @@
     [self initErrorView];
     
     self.label_Badge.clipsToBounds = YES;
-    self.label_Badge.layer.cornerRadius = 8;
+    self.label_Badge.layer.cornerRadius = 10;
     
     self.dataBBBGArr = [NSMutableArray new];
     self.TTTS_data_array = [NSMutableArray new];
@@ -132,8 +132,9 @@
 
 - (void) cancelSucessNotification:(NSNotification *) notification
 {
+    [self reloadAllData];
     [self.dataBBBGArr removeAllObjects];
-    
+
     NSDictionary *parameter = @{
                                 @"employeeId": @"102026",
                                 @"start": IntToString(self.startBBBG),
@@ -142,7 +143,7 @@
                                 };
     [KTTSProcessor postKTTS_BBBG:parameter handle:^(id result, NSString *error) {
         NSArray *array = result[@"listMinuteHandOver"];
-        
+
         [self.dataBBBGArr addObjectsFromArray:array];
         NSPredicate *p = [NSPredicate predicateWithFormat:@"status = %d", 0];
         self.filterDataBBBGArr = [self.dataBBBGArr filteredArrayUsingPredicate:p];
@@ -155,6 +156,7 @@
     } onError:^(NSString *Error) {
     } onException:^(NSString *Exception) {
     }];
+    [self.bbbgAssetsTableView reloadData];
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
