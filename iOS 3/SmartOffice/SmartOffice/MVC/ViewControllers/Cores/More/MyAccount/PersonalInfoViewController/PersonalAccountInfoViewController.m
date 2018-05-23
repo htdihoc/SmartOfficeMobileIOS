@@ -432,6 +432,7 @@
             _filterTypeTTTS = filterType;
             switch (filterType) {
                 case 0:
+                    self.filteredInt = 0;
                     [self searchlocalwith:@""];
                     break;
                 case 1:
@@ -453,6 +454,7 @@
             _filterTypeBBBG = filterType;
             switch (filterType) {
                 case 0:
+                    self.filteredInt = 0;
                     [self searchlocalwith:@""];
                     break;
                 case 1:
@@ -708,7 +710,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (tableView == self.infoAssetsTableView) {
-        if (self.searchTextFieldTTTSString.length == 0) {
+        if (self.searchTextFieldTTTSString.length == 0 && self.filteredInt == 0 && self.switchScreen == 0) {
             return self.TTTS_data_array.count;
         }else {
             if (_isFiltered) {
@@ -719,7 +721,7 @@
         }
         
     } else if (tableView == self.bbbgAssetsTableView) {
-        if (self.searchTextFieldBBBGString.length == 0) {
+        if (self.searchTextFieldBBBGString.length == 0 && self.filteredInt == 0 && self.switchScreen == 1) {
             return self.BBBG_data_array.count;
         }else {
             if (_isFiltered) {
@@ -741,8 +743,8 @@
     personalAccInfoCell.lb_cell_number.text = IntToString(indexPath.row+1);
     
     if (tableView == self.infoAssetsTableView) {
-        if (self.searchTextFieldTTTSString.length == 0) {
-            self.data_TTTS = [PropertyInfoModel arrayOfModelsFromDictionaries:self.data_FilterTTTS error:nil];
+        if (self.searchTextFieldTTTSString.length == 0 && self.filteredInt == 0 && self.switchScreen == 0) {
+            self.data_TTTS = [PropertyInfoModel arrayOfModelsFromDictionaries:self.TTTS_data_array error:nil];
         }else {
             if (!_isFiltered) {
                 self.data_TTTS = [PropertyInfoModel arrayOfModelsFromDictionaries:self.TTTS_data_array error:nil];
@@ -770,8 +772,8 @@
             [self loadmoreTableView];
         }
     } else if (tableView == self.bbbgAssetsTableView) {
-        if (self.searchTextFieldBBBGString.length == 0) {
-            self.data_BBBG = [BBBGAssetModel arrayOfModelsFromDictionaries:self.data_FilterBBBG error:nil];
+        if (self.searchTextFieldBBBGString.length == 0 && self.filteredInt == 0 && self.switchScreen == 1) {
+            self.data_BBBG = [BBBGAssetModel arrayOfModelsFromDictionaries:self.BBBG_data_array error:nil];
         }else {
             if (!_isFiltered) {
                 self.data_BBBG = [BBBGAssetModel arrayOfModelsFromDictionaries:self.BBBG_data_array error:nil];
