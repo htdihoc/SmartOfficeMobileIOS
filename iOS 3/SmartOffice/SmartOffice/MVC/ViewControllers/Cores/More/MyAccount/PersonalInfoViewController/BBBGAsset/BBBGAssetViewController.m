@@ -11,6 +11,7 @@
 #import "PropertyDetailsViewController.h"
 #import "KTTSProcessor.h"
 #import "DetailBBBGModel.h"
+#import "RefuseAlertView.h"
 
 @interface BBBGAssetViewController () <TTNS_BaseNavViewDelegate, UITableViewDataSource, UITableViewDelegate, SOSearchBarViewDelegate>
 
@@ -311,41 +312,71 @@
 //params.put("type", 2);
 
 - (IBAction)btnRefuseAction:(id)sender {
-    NSDictionary *parameter = @{
-                                @"idBBBGTSCN": self.id_BBBG_detail,
-                                @"type": @"2",
-                                @"reason": self.bbbgModelAsset.description
-                                };
-    [KTTSProcessor postUPDATE_IN_HAN:parameter handle:^(id result, NSString *error) {
-        [[NSNotificationCenter defaultCenter]
-         postNotificationName:@"AcceptOrRefuseActionNotification"
-         object:self];
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Thông báo" message:@"Từ chối thành công." delegate:self cancelButtonTitle:@"Đóng" otherButtonTitles:nil, nil];
-        [alert show];
-    } onError:^(NSString *Error) {
-        [self showAlertFailure:@"Có lỗi xảy ra. Vui lòng kiểm tra lại."];
-    } onException:^(NSString *Exception) {
-        [self showAlertFailure:@"Mất kết nối mạng"];
-    }];
+    
+//    NSDictionary *parameter = @{
+//                                @"idBBBGTSCN": self.id_BBBG_detail,
+//                                @"type": @"2",
+//                                @"reason": myTextField.text
+//                                };
+//    [KTTSProcessor postUPDATE_IN_HAN:parameter handle:^(id result, NSString *error) {
+//        [[NSNotificationCenter defaultCenter]
+//         postNotificationName:@"AcceptOrRefuseActionNotification"
+//         object:self];
+//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Thông báo" message:@"Từ chối thành công." delegate:self cancelButtonTitle:@"Đóng" otherButtonTitles:nil, nil];
+//        [alert show];
+//    } onError:^(NSString *Error) {
+//        [self showAlertFailure:@"Có lỗi xảy ra. Vui lòng kiểm tra lại."];
+//    } onException:^(NSString *Exception) {
+//        [self showAlertFailure:@"Mất kết nối mạng"];
+//    }];
+    
+    RefuseAlertView *refuseAlertView = [[[NSBundle mainBundle] loadNibNamed:@"RefuseAlertView" owner:self options:nil] objectAtIndex:0];
+    refuseAlertView.id_BBBG_detail = self.id_BBBG_detail;
+    refuseAlertView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
+    [self.view addSubview:refuseAlertView];
 }
 
 - (IBAction)btnAcceptAction:(id)sender {
-    NSDictionary *parameter = @{
-                                @"idBBBGTSCN": self.id_BBBG_detail,
-                                @"type": @"1",
-                                @"reason": self.bbbgModelAsset.description
-                                };
-    [KTTSProcessor postUPDATE_IN_HAN:parameter handle:^(id result, NSString *error) {
-        [[NSNotificationCenter defaultCenter]
-         postNotificationName:@"AcceptOrRefuseActionNotification"
-         object:self];
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Thông báo" message:@"Xác nhận thành công." delegate:self cancelButtonTitle:@"Đóng" otherButtonTitles:nil, nil];
-        [alert show];
-    } onError:^(NSString *Error) {
-        [self showAlertFailure:@"Có lỗi xảy ra. Vui lòng kiểm tra lại."];
-    } onException:^(NSString *Exception) {
-        [self showAlertFailure:@"Mất kết nối mạng"];
-    }];
+    UIAlertController * alert=[UIAlertController alertControllerWithTitle:@"Xác nhận"
+                                                                  message:@"Đ/c có chắc chắn muốn xác nhận TS này ?"
+                                                           preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction* yesButton = [UIAlertAction actionWithTitle:@"Gửi"
+                                                        style:UIAlertActionStyleDefault
+                                                      handler:^(UIAlertAction * action)
+                                {
+                                    NSLog(@"you pressed Yes, please button");
+                                    NSDictionary *parameter = @{
+                                                                @"idBBBGTSCN": self.id_BBBG_detail,
+                                                                @"type": @"1",
+                                                                @"reason": self.bbbgModelAsset.description
+                                                                };
+                                    [KTTSProcessor postUPDATE_IN_HAN:parameter handle:^(id result, NSString *error) {
+                                        [[NSNotificationCenter defaultCenter]
+                                         postNotificationName:@"AcceptOrRefuseActionNotification"
+                                         object:self];
+                                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Thông báo" message:@"Xác nhận thành công." delegate:self cancelButtonTitle:@"Đóng" otherButtonTitles:nil, nil];
+                                        [alert show];
+                                    } onError:^(NSString *Error) {
+                                        [self showAlertFailure:@"Có lỗi xảy ra. Vui lòng kiểm tra lại."];
+                                    } onException:^(NSString *Exception) {
+                                        [self showAlertFailure:@"Mất kết nối mạng"];
+                                    }];
+                                }];
+    
+    UIAlertAction* noButton = [UIAlertAction actionWithTitle:@"ĐÓNG"
+                                                       style:UIAlertActionStyleDefault
+                                                     handler:^(UIAlertAction * action)
+                               {
+                                   NSLog(@"you pressed No, thanks button");
+                               }];
+    
+    [noButton setValue:[UIColor grayColor] forKey:@"titleTextColor"];
+    [alert addAction:noButton];
+    [alert addAction:yesButton];
+    alert.preferredAction = yesButton;
+    [self presentViewController:alert animated:YES completion:nil];
+    
 }
 
 - (void) showAlertFailure:(NSString *)mess {

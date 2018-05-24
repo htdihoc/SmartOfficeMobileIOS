@@ -282,6 +282,8 @@
             if (self.searchTextFieldTTTSString.length == 0 && self.filteredInt == 0) {
                 _isFiltered = NO;
                 [self.infoAssetsTableView reloadData];
+                [self.infoAssetsTableView setContentOffset:CGPointZero animated:YES];
+
 //                [self.bbbgAssetsTableView reloadData];
                 self.total_record.text = IntToString(self.countTTTSClearText);
                 
@@ -295,6 +297,7 @@
                 NSPredicate *p = [NSPredicate predicateWithFormat:@"catMerName CONTAINS[cd] %@ or serialNumber CONTAINS[cd] %@ or privateManagerName CONTAINS[cd] %@", searchText, searchText, searchText];
                 self.data_FilterTTTS = [self.TTTS_data_array filteredArrayUsingPredicate:p];
                 [self.infoAssetsTableView reloadData];
+                [self.infoAssetsTableView setContentOffset:CGPointZero animated:YES];
 //                [self.bbbgAssetsTableView reloadData];
                 self.total_record.text = [NSString stringWithFormat:@"%lu", (unsigned long)self.data_FilterTTTS.count];
                 
@@ -313,6 +316,7 @@
                 _isFiltered = NO;
 //                [self.infoAssetsTableView reloadData];
                 [self.bbbgAssetsTableView reloadData];
+                [self.bbbgAssetsTableView setContentOffset:CGPointZero animated:YES];
                 self.total_record.text = IntToString(self.countBBBGClearText);
                 if (self.countBBBG > 0) {
                     self.noResultLabel.hidden = YES;
@@ -325,6 +329,7 @@
                 self.data_FilterBBBG = [self.BBBG_data_array filteredArrayUsingPredicate:p];
 //                [self.infoAssetsTableView reloadData];
                 [self.bbbgAssetsTableView reloadData];
+                [self.bbbgAssetsTableView setContentOffset:CGPointZero animated:YES];
                 self.total_record.text = [NSString stringWithFormat:@"%lu", (unsigned long)self.data_FilterBBBG.count];
                 if (self.data_FilterBBBG.count > 0) {
                     self.noResultLabel.hidden = YES;
@@ -359,7 +364,9 @@
         NSPredicate *p = [NSPredicate predicateWithFormat:@"status = %d", status.integerValue];
         self.data_FilterBBBG = [self.BBBG_data_array filteredArrayUsingPredicate:p];
         [self.infoAssetsTableView reloadData];
+        [self.infoAssetsTableView setContentOffset:CGPointZero animated:YES];
         [self.bbbgAssetsTableView reloadData];
+        [self.bbbgAssetsTableView setContentOffset:CGPointZero animated:YES];
         self.total_record.text = [NSString stringWithFormat:@"%lu", (unsigned long)self.data_FilterBBBG.count];
         if (self.data_FilterBBBG.count > 0) {
             self.noResultLabel.hidden = YES;
@@ -368,6 +375,8 @@
         }
         
         [self.bbbgAssetsTableView reloadData];
+        [self.bbbgAssetsTableView setContentOffset:CGPointZero animated:YES];
+
     } onError:^(NSString *Error) {
         [self errorServerTTTS];
     } onException:^(NSString *Exception) {
@@ -648,6 +657,7 @@
             }
         }
         [self.infoAssetsTableView reloadData];
+        [self.infoAssetsTableView setContentOffset:CGPointZero animated:YES];
     } onError:^(NSString *Error) {
         [self errorServerTTTS];
     } onException:^(NSString *Exception) {
@@ -697,6 +707,7 @@
             }
         }
         [self.bbbgAssetsTableView reloadData];
+        [self.bbbgAssetsTableView setContentOffset:CGPointZero animated:YES];
     } onError:^(NSString *Error) {
         [self errorServerTTTS];
     } onException:^(NSString *Exception) {
@@ -710,26 +721,26 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (tableView == self.infoAssetsTableView) {
-        if (self.searchTextFieldTTTSString.length == 0 && self.filteredInt == 0 && self.switchScreen == 0) {
-            return self.TTTS_data_array.count;
-        }else {
+//        if (self.searchTextFieldTTTSString.length == 0 && self.filteredInt == 0 && self.switchScreen == 0) {
+//            return self.TTTS_data_array.count;
+//        }else {
             if (_isFiltered) {
                 return self.data_FilterTTTS.count;
             } else {
                 return self.TTTS_data_array.count;
             }
-        }
+//        }
         
     } else if (tableView == self.bbbgAssetsTableView) {
-        if (self.searchTextFieldBBBGString.length == 0 && self.filteredInt == 0 && self.switchScreen == 1) {
-            return self.BBBG_data_array.count;
-        }else {
+//        if (self.searchTextFieldBBBGString.length == 0 && self.filteredInt == 0 && self.switchScreen == 1) {
+//            return self.BBBG_data_array.count;
+//        }else {
             if (_isFiltered) {
                 return self.data_FilterBBBG.count;
             } else {
                 return self.BBBG_data_array.count;
             }
-        }
+//        }
     } else {
         return 0;
     }
@@ -743,15 +754,15 @@
     personalAccInfoCell.lb_cell_number.text = IntToString(indexPath.row+1);
     
     if (tableView == self.infoAssetsTableView) {
-        if (self.searchTextFieldTTTSString.length == 0 && self.filteredInt == 0 && self.switchScreen == 0) {
-            self.data_TTTS = [PropertyInfoModel arrayOfModelsFromDictionaries:self.TTTS_data_array error:nil];
-        }else {
+//        if (self.searchTextFieldTTTSString.length == 0 && self.filteredInt == 0 && self.switchScreen == 0) {
+//            self.data_TTTS = [PropertyInfoModel arrayOfModelsFromDictionaries:self.TTTS_data_array error:nil];
+//        }else {
             if (!_isFiltered) {
                 self.data_TTTS = [PropertyInfoModel arrayOfModelsFromDictionaries:self.TTTS_data_array error:nil];
             } else {
                 self.data_TTTS = [PropertyInfoModel arrayOfModelsFromDictionaries:self.data_FilterTTTS error:nil];
             }
-        }
+//        }
         PropertyInfoModel *propertyinfo = self.data_TTTS[indexPath.row];
         
         // title
@@ -772,15 +783,15 @@
             [self loadmoreTableView];
         }
     } else if (tableView == self.bbbgAssetsTableView) {
-        if (self.searchTextFieldBBBGString.length == 0 && self.filteredInt == 0 && self.switchScreen == 1) {
-            self.data_BBBG = [BBBGAssetModel arrayOfModelsFromDictionaries:self.BBBG_data_array error:nil];
-        }else {
+//        if (self.searchTextFieldBBBGString.length == 0 && self.filteredInt == 0 && self.switchScreen == 1) {
+//            self.data_BBBG = [BBBGAssetModel arrayOfModelsFromDictionaries:self.BBBG_data_array error:nil];
+//        }else {
             if (!_isFiltered) {
                 self.data_BBBG = [BBBGAssetModel arrayOfModelsFromDictionaries:self.BBBG_data_array error:nil];
             } else {
                 self.data_BBBG = [BBBGAssetModel arrayOfModelsFromDictionaries:self.data_FilterBBBG error:nil];
             }
-        }
+//        }
         BBBGAssetModel *bbbg = self.data_BBBG[indexPath.row];
         
         // title
@@ -867,6 +878,7 @@
                 if(self.startTTTS < self.countTTTS){
                     [self countDataTTTS];
                     [self.infoAssetsTableView reloadData];
+                    [self.infoAssetsTableView setContentOffset:CGPointZero animated:YES];
                 }
                 break;
             case 1:
@@ -874,6 +886,7 @@
                 if(self.startBBBG < self.countBBBG){
                     [self countDataBBBG];
                     [self.bbbgAssetsTableView reloadData];
+                    [self.bbbgAssetsTableView setContentOffset:CGPointZero animated:YES];
                 }
                 break;
             default:
@@ -947,7 +960,7 @@
                 }
             }
             [self.infoAssetsTableView reloadData];
-            
+            [self.infoAssetsTableView setContentOffset:CGPointZero animated:YES];
             NSLog(@"XEM LAI FRAME NHE:%@", NSStringFromCGRect(self.infoAssetsTableView.frame));
             [self.scrollView scrollRectToVisible:self.infoAssetsTableView.frame animated:YES];
             [UIView animateWithDuration:0.3f animations:^{
@@ -988,6 +1001,7 @@
                 }
             }
             [self.bbbgAssetsTableView reloadData];
+            [self.bbbgAssetsTableView setContentOffset:CGPointZero animated:YES];
             NSLog(@"XEM LAI FRAME NHE:%@", NSStringFromCGRect(self.bbbgAssetsTableView.frame));
             [self.scrollView scrollRectToVisible:self.bbbgAssetsTableView.frame animated:YES];
             [UIView animateWithDuration:0.3f animations:^{
