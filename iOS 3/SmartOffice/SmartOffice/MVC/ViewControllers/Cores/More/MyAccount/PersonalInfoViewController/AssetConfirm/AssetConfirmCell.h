@@ -10,6 +10,13 @@
 //#import "KPDropMenu.h"
 #import "MKDropdownMenu.h"
 
+@protocol SendCloseDropDownDelegate <NSObject>
+
+- (void) sendShowDropDown;
+- (void) sendCloseDropDown;
+
+@end
+
 @interface AssetConfirmCell : UITableViewCell<MKDropdownMenuDataSource, MKDropdownMenuDelegate>
 
 //@property (weak, nonatomic) IBOutlet KPDropMenu *view_type;
@@ -32,5 +39,7 @@
 @property (nonatomic) NSInteger typeIntDropDown;
 @property (nonatomic, strong) NSArray *itemsArray;
 @property (nonatomic, strong) NSArray *itemsLabelArray;
+
+@property (weak, nonatomic) id<SendCloseDropDownDelegate> delegate;
 
 @end

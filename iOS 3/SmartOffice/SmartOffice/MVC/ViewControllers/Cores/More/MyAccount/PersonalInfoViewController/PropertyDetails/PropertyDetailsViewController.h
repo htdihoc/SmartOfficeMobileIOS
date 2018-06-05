@@ -13,6 +13,9 @@
 
 @property (assign, nonatomic) NSInteger isStatus;
 @property (assign, nonatomic) NSInteger isColorButton;
+@property (assign, nonatomic) NSInteger isColorButtonCopy;
+
+@property (strong, nonatomic) NSString *privateManagerName;
 
 @property (strong, nonatomic) NSString *value_commodity_code;
 @property (strong, nonatomic) NSString *value_commodity_name;

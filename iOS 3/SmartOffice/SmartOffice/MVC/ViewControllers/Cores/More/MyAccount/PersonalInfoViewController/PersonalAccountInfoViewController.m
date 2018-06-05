@@ -99,16 +99,118 @@
     [self reloadAllData];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(confirmSucessNotification:)
+                                                 name:@"ConfirmSucessNotification"
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(cancelSucessNotification:)
                                                  name:@"CancelSucessNotification"
                                                object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(acceptOrRefuseActionNotification:)
-                                                 name:@"AcceptOrRefuseActionNotification"
+                                             selector:@selector(refuseActionNotification:)
+                                                 name:@"RefuseActionNotification"
                                                object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(acceptActionNotification:)
+                                                 name:@"AcceptActionNotification"
+                                               object:nil];
+
 }
 
-- (void) acceptOrRefuseActionNotification:(NSNotification *) notification
+
+- (void) acceptActionNotification:(NSNotification *) notification{
+    
+    self.startTTTS = 0;
+    self.startBBBG = 0;
+    self.limit = 20;
+    
+    [self.dataBBBGArr removeAllObjects];
+    [self.TTTS_data_array removeAllObjects];
+    [self.BBBG_data_array removeAllObjects];
+    [self.data_TTTS removeAllObjects];
+    [self.data_BBBG removeAllObjects];
+    NSArray *tttsArray = [NSArray new];
+    NSArray *bbbgArray = [NSArray new];
+    self.data_FilterTTTS = tttsArray;
+    self.data_FilterBBBG = bbbgArray;
+    [self.data_BBBG_First removeAllObjects];
+    [self.data_TTTS_First removeAllObjects];
+    [self countDataTTTS];
+    [self countDataBBBG];
+    
+    [self.dataBBBGArr removeAllObjects];
+    
+    NSDictionary *parameter = @{
+                                @"employeeId": @"102026",
+                                @"start": IntToString(self.startBBBG),
+                                @"keyword": self.searchTextFieldBBBGString,
+                                @"limit": IntToString(1000)
+                                };
+    [KTTSProcessor postKTTS_BBBG:parameter handle:^(id result, NSString *error) {
+        NSArray *array = result[@"listMinuteHandOver"];
+        
+        [self.dataBBBGArr addObjectsFromArray:array];
+        NSPredicate *p = [NSPredicate predicateWithFormat:@"status = %d", 0];
+        
+        self.filterDataBBBGArr = [self.dataBBBGArr filteredArrayUsingPredicate:p];
+        self.label_Badge.text = [NSString stringWithFormat:@"%lu", (unsigned long)self.filterDataBBBGArr.count];
+        if(self.filterDataBBBGArr.count == 0){
+            self.label_Badge.hidden = YES;
+        }else {
+            self.label_Badge.hidden = NO;
+        }
+    } onError:^(NSString *Error) {
+    } onException:^(NSString *Exception) {
+    }];
+}
+
+- (void) refuseActionNotification:(NSNotification *) notification
+{
+    self.startTTTS = 0;
+    self.startBBBG = 0;
+    self.limit = 20;
+    
+    [self.dataBBBGArr removeAllObjects];
+    [self.TTTS_data_array removeAllObjects];
+    [self.BBBG_data_array removeAllObjects];
+    [self.data_TTTS removeAllObjects];
+    [self.data_BBBG removeAllObjects];
+    NSArray *tttsArray = [NSArray new];
+    NSArray *bbbgArray = [NSArray new];
+    self.data_FilterTTTS = tttsArray;
+    self.data_FilterBBBG = bbbgArray;
+    [self.data_BBBG_First removeAllObjects];
+    [self.data_TTTS_First removeAllObjects];
+    [self countDataTTTS];
+    [self countDataBBBG];
+    
+    [self.dataBBBGArr removeAllObjects];
+    
+    NSDictionary *parameter = @{
+                                @"employeeId": @"102026",
+                                @"start": IntToString(self.startBBBG),
+                                @"keyword": self.searchTextFieldBBBGString,
+                                @"limit": IntToString(1000)
+                                };
+    [KTTSProcessor postKTTS_BBBG:parameter handle:^(id result, NSString *error) {
+        NSArray *array = result[@"listMinuteHandOver"];
+        
+        [self.dataBBBGArr addObjectsFromArray:array];
+        NSPredicate *p = [NSPredicate predicateWithFormat:@"status = %d", 0];
+        
+        self.filterDataBBBGArr = [self.dataBBBGArr filteredArrayUsingPredicate:p];
+        self.label_Badge.text = [NSString stringWithFormat:@"%lu", (unsigned long)self.filterDataBBBGArr.count];
+        if(self.filterDataBBBGArr.count == 0){
+            self.label_Badge.hidden = YES;
+        }else {
+            self.label_Badge.hidden = NO;
+        }
+    } onError:^(NSString *Error) {
+    } onException:^(NSString *Exception) {
+    }];
+}
+
+- (void) confirmSucessNotification:(NSNotification *) notification
 {
     self.startTTTS = 0;
     self.startBBBG = 0;
@@ -872,6 +974,31 @@
     } else {
         //        self.startTTTS = 0;
         //        self.startBBBG = 0;
+        [self.dataBBBGArr removeAllObjects];
+        
+        NSDictionary *parameter = @{
+                                    @"employeeId": @"102026",
+                                    @"start": IntToString(self.startBBBG),
+                                    @"keyword": self.searchTextFieldBBBGString,
+                                    @"limit": IntToString(1000)
+                                    };
+        [KTTSProcessor postKTTS_BBBG:parameter handle:^(id result, NSString *error) {
+            NSArray *array = result[@"listMinuteHandOver"];
+            
+            [self.dataBBBGArr addObjectsFromArray:array];
+            NSPredicate *p = [NSPredicate predicateWithFormat:@"status = %d", 0];
+            
+            self.filterDataBBBGArr = [self.dataBBBGArr filteredArrayUsingPredicate:p];
+            self.label_Badge.text = [NSString stringWithFormat:@"%lu", (unsigned long)self.filterDataBBBGArr.count];
+            if(self.filterDataBBBGArr.count == 0){
+                self.label_Badge.hidden = YES;
+            }else {
+                self.label_Badge.hidden = NO;
+            }
+        } onError:^(NSString *Error) {
+        } onException:^(NSString *Exception) {
+        }];
+        
         switch (self.switchScreen) {
             case 0:
                 //                [self.TTTS_data_array removeAllObjects];
@@ -1073,7 +1200,7 @@
                     propertyDetails.isColorButton = 2;
                     break;
             }
-            
+            propertyDetails.privateManagerName = propertyinfo.privateManagerName;
             [self.navigationController pushViewController:propertyDetails animated:YES];
         }
             break;

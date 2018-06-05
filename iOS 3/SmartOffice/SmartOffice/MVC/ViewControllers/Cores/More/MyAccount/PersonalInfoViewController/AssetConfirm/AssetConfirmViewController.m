@@ -13,7 +13,7 @@
 #import "KTTSProcessor.h"
 #import "UIAlertView+Blocks.h"
 
-@interface AssetConfirmViewController () <TTNS_BaseNavViewDelegate, UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate, BBBGAssetCellDelegate> {
+@interface AssetConfirmViewController () <TTNS_BaseNavViewDelegate, UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate, BBBGAssetCellDelegate, SendCloseDropDownDelegate> {
     BBBGAssetCell *bbbgCell;
     AssetConfirmCell *assetConfirmCell;
 }
@@ -76,6 +76,7 @@
             NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"AssetConfirmCell" owner:self options:nil];
             assetConfirmCell = [nib objectAtIndex:0];
         }
+        assetConfirmCell.delegate = self;
         assetConfirmCell.text_number_not_used.text = self.value_number;
         assetConfirmCell.selectionStyle = UIAccessibilityTraitNone;
         return assetConfirmCell;
@@ -89,7 +90,15 @@
         return 480;
     }
 }
-    
+
+- (void) sendShowDropDown{
+    self.assetconfirmTableView.scrollEnabled = NO;
+}
+
+- (void) sendCloseDropDown{
+    self.assetconfirmTableView.scrollEnabled = YES;
+}
+
 - (IBAction)confirmAction:(id)sender {
     NSDate *dateFromString = [NSDate new];
     NSTimeInterval timeInMiliseconds = [dateFromString timeIntervalSince1970]*1000;
@@ -139,7 +148,7 @@
 //        [alert show];
         
         UIAlertController * alert=[UIAlertController alertControllerWithTitle:@"Xác nhận"
-                                                                      message:@"Đ/c chắn chắn muốn gửi xác nhận này?"
+                                                                      message:@"Đ/c chắc chắn muốn gửi xác nhận này?"
                                                                preferredStyle:UIAlertControllerStyleAlert];
         
         UIAlertAction* yesButton = [UIAlertAction actionWithTitle:@"Gửi"
@@ -184,11 +193,15 @@
                                 @"merEntityId": IntToString(_merEntityId),
                                 @"count": assetConfirmCell.text_number_not_used.text,
                                 @"date": IntToString(assetConfirmCell.date),
-                                @"type": IntToString(assetConfirmCell.type),
+                                @"type": IntToString(assetConfirmCell.typeIntDropDown + 1),
                                 @"reason": assetConfirmCell.tv_reason.text
                                 };
     [KTTSProcessor postKTTS_CONFIRM_TTTS:parameter handle:^(id result, NSString *error) {
         [self hideCustomHUB];
+        [[NSNotificationCenter defaultCenter]
+         postNotificationName:@"ConfirmSucessNotification"
+         object:self];
+        [self didTapBackButton];
         if (self.delegate) {
             [self.delegate successAssetConfirmVC];
         }

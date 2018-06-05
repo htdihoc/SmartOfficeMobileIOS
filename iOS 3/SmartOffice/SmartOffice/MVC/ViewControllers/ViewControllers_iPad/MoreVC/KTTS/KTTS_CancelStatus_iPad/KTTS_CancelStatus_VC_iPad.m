@@ -16,6 +16,7 @@
 }
 
 @property (nonatomic) BOOL setCancel;
+@property (nonatomic, strong) UIAlertView *alert;
 
 @end
 
@@ -151,40 +152,55 @@
 }
 
 - (IBAction)actionAgree:(id)sender {
-    [self.delegate actionShowConfirmTTTSlert];
-    
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Xác nhận" message:[NSString stringWithFormat:@"Bạn chắc chắn muốn hủy thông báo \"%@\" với tài sản này?", message] delegate:self cancelButtonTitle:@"Đóng" otherButtonTitles:@"Xác nhận", nil];
-    [alert show];
-    
-}
+    [self mz_dismissFormSheetControllerAnimated:YES completionHandler:^(MZFormSheetController * _Nonnull formSheetController) {
+        [self.delegate actionShowConfirmTTTSlert];
+//
+//        self.alert = [[UIAlertView alloc] initWithTitle:@"Xác nhận" message:[NSString stringWithFormat:@"Bạn chắc chắn muốn hủy thông báo \"%@\" với tài sản này?", message] delegate:self cancelButtonTitle:@"Đóng" otherButtonTitles:@"Xác nhận", nil];
+//        [self.alert show];
 
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    switch (buttonIndex) {
-        case 1:
-        {
-            NSDictionary *parameter = @{
-                                        @"merEntityId": self.merEntityId,
-                                        @"type": IntToString(self.typeCancel)
-                                        };
-            [KTTSProcessor postKTTS_CANCEL_TTTS:parameter handle:^(id result, NSString *error) {
-                [[NSNotificationCenter defaultCenter]
-                 postNotificationName:@"CancelSucessNotification"
-                 object:self];
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Thông báo" message:@"Hủy thành công." delegate:self cancelButtonTitle:@"Đóng" otherButtonTitles:nil, nil];
-                [alert show];
-            } onError:^(NSString *Error) {
-                [self showAlertFailure:@"Có lỗi xảy ra. Vui lòng kiểm tra lại."];
-            } onException:^(NSString *Exception) {
-                [self showAlertFailure:@"Mất kết nối mạng"];
-            }];
-        }
-            break;
-        default:
-            break;
-    }
+         UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"Xác nhận"
+                                      message:[NSString stringWithFormat:@"Bạn chắc chắn muốn hủy thông báo \"%@\" với tài sản này?", message]
+                                      preferredStyle:UIAlertControllerStyleAlert];
+         UIAlertAction* yesButton = [UIAlertAction
+                                     actionWithTitle:@"Xác nhận"
+                                     style:UIAlertActionStyleDefault
+                                     handler:^(UIAlertAction * action) {
+                                         NSDictionary *parameter = @{
+                                                                     @"merEntityId": self.merEntityId,
+                                                                     @"type": IntToString(self.typeCancel)
+                                                                     };
+                                         [KTTSProcessor postKTTS_CANCEL_TTTS:parameter handle:^(id result, NSString *error) {
+                                             [[NSNotificationCenter defaultCenter]
+                                              postNotificationName:@"CancelSucessNotification"
+                                              object:self];
+                                             [alert dismissViewControllerAnimated:NO completion:nil];
+                                             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Thông báo" message:@"Hủy thành công." delegate:self cancelButtonTitle:@"Đóng" otherButtonTitles:nil, nil];
+                                             [alert show];
+                                         } onError:^(NSString *Error) {
+                                             [alert dismissViewControllerAnimated:NO completion:nil];
+                                             [self showAlertFailure:@"Có lỗi xảy ra. Vui lòng kiểm tra lại."];
+                                         } onException:^(NSString *Exception) {
+                                             [alert dismissViewControllerAnimated:NO completion:nil];
+                                             [self showAlertFailure:@"Mất kết nối mạng"];
+                                         }];
+                                     }];
+         UIAlertAction* noButton = [UIAlertAction
+                                    actionWithTitle:@"Đóng"
+                                    style:UIAlertActionStyleCancel
+                                    handler:^(UIAlertAction * action) {
+                                        //
+                                    }];
+         [noButton setValue:[UIColor grayColor] forKey:@"titleTextColor"];
+         [alert addAction:noButton];
+         [alert addAction:yesButton];
+         alert.preferredAction = yesButton;
+         [[AppDelegate sharedDelegate].window.rootViewController presentViewController:alert animated:YES completion:nil];
+    }];
+    
 }
 
 - (void) showAlertFailure:(NSString *)mess {
+    [self.alert removeFromSuperview];
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Thông báo" message: mess delegate:self cancelButtonTitle:@"Đóng" otherButtonTitles:nil, nil];
     [alert show];
 }

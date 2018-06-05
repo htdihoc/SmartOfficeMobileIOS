@@ -16,7 +16,7 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iN0-l3-epB">
-                    <rect key="frame" x="20" y="243.5" width="335" height="180"/>
+                    <rect key="frame" x="20" y="150" width="335" height="180"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lý do từ chối" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hsg-Bd-KZg">
                             <rect key="frame" x="0.0" y="0.0" width="335" height="30"/>
@@ -39,10 +39,10 @@
                             </subviews>
                             <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
-                                <constraint firstItem="NW5-wt-3GR" firstAttribute="leading" secondItem="pGj-fA-LSt" secondAttribute="leading" constant="1" id="H3R-A3-zRp"/>
-                                <constraint firstAttribute="trailing" secondItem="NW5-wt-3GR" secondAttribute="trailing" constant="1" id="NmR-vR-aip"/>
-                                <constraint firstItem="NW5-wt-3GR" firstAttribute="top" secondItem="pGj-fA-LSt" secondAttribute="top" constant="1" id="VKX-Hd-0DX"/>
-                                <constraint firstAttribute="bottom" secondItem="NW5-wt-3GR" secondAttribute="bottom" constant="1" id="cHu-Bt-KP0"/>
+                                <constraint firstItem="NW5-wt-3GR" firstAttribute="leading" secondItem="pGj-fA-LSt" secondAttribute="leading" constant="0.5" id="H3R-A3-zRp"/>
+                                <constraint firstAttribute="trailing" secondItem="NW5-wt-3GR" secondAttribute="trailing" constant="0.5" id="NmR-vR-aip"/>
+                                <constraint firstItem="NW5-wt-3GR" firstAttribute="top" secondItem="pGj-fA-LSt" secondAttribute="top" constant="0.5" id="VKX-Hd-0DX"/>
+                                <constraint firstAttribute="bottom" secondItem="NW5-wt-3GR" secondAttribute="bottom" constant="0.5" id="cHu-Bt-KP0"/>
                                 <constraint firstAttribute="height" constant="80" id="uh8-Kg-roN"/>
                             </constraints>
                         </view>
@@ -59,14 +59,14 @@
                             <rect key="frame" x="0.0" y="130" width="335" height="1"/>
                             <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="1" id="lOE-iw-QnY"/>
+                                <constraint firstAttribute="height" constant="0.5" id="lOE-iw-QnY"/>
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ggu-29-lTy">
                             <rect key="frame" x="166.5" y="131" width="1" height="49"/>
                             <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
-                                <constraint firstAttribute="width" constant="1" id="Q3V-IZ-kv3"/>
+                                <constraint firstAttribute="width" constant="0.5" id="Q3V-IZ-kv3"/>
                             </constraints>
                         </view>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CFQ-9g-ROi">
@@ -104,11 +104,11 @@
                     </constraints>
                 </view>
             </subviews>
-            <color key="backgroundColor" white="0.0" alpha="0.29999999999999999" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <color key="backgroundColor" white="0.0" alpha="0.45000000000000001" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="iN0-l3-epB" secondAttribute="trailing" constant="20" id="OyH-lg-Mrq"/>
-                <constraint firstItem="iN0-l3-epB" firstAttribute="centerY" secondItem="Gca-Am-F8y" secondAttribute="centerY" id="XM3-KU-QAv"/>
                 <constraint firstItem="iN0-l3-epB" firstAttribute="leading" secondItem="Gca-Am-F8y" secondAttribute="leading" constant="20" id="itw-JQ-WPE"/>
+                <constraint firstItem="iN0-l3-epB" firstAttribute="top" secondItem="Gca-Am-F8y" secondAttribute="top" constant="150" id="xPw-9K-elg"/>
             </constraints>
             <connections>
                 <outlet property="refuseTextView" destination="NW5-wt-3GR" id="mFP-OT-k1P"/>

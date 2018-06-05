@@ -50,7 +50,7 @@ typedef NS_ENUM(NSInteger, Status) {
         self.hightBtnCancel.constant = 0;
         self.hightBtnConfirm.constant = 0;
     }
-    
+    self.isColorButtonCopy = self.isColorButton;
     switch (self.isColorButton) {
         case isCancelStatus: {
             [self setColorCancel];
@@ -83,7 +83,69 @@ typedef NS_ENUM(NSInteger, Status) {
         }
     });
     
+//    [[NSNotificationCenter defaultCenter] addObserver:self
+//                                             selector:@selector(confirmSucessNotification:)
+//                                                 name:@"ConfirmSucessNotification"
+//                                               object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self
+//                                             selector:@selector(cancelSucessNotification:)
+//                                                 name:@"CancelSucessNotification"
+//                                               object:nil];
+    
 }
+
+//- (void) confirmSucessNotification:(NSNotification *) notification
+//{
+////    isCancelStatus = 0,     // xác nhận
+////    isConfirmStatus = 1,    // hủy
+////    isAllStatus = 2         // xác nhận và hủy
+//
+//
+//    if(self.isColorButton == 0){
+//        self.isColorButton = 2;
+//    }else if(self.isColorButton == 2){
+//        self.isColorButton = 2;
+//    }
+//
+//        switch (self.isColorButton) {
+//            case isCancelStatus: {
+//                [self setColorCancel];
+//            }
+//                break;
+//            case isConfirmStatus: {
+//                [self setColorConfirm];
+//            }
+//                break;
+//            case isAllStatus: {
+//                self.btnCancelOrConfirm.hidden = YES;
+//                break;
+//            }
+//            default:
+//                break;
+//        }
+//
+//}
+//
+//- (void) cancelSucessNotification:(NSNotification *) notification
+//{
+//
+//    switch (self.isColorButton) {
+//        case isCancelStatus: {
+//            [self setColorCancel];
+//        }
+//            break;
+//        case isConfirmStatus: {
+//            [self setColorConfirm];
+//        }
+//            break;
+//        case isAllStatus: {
+//            self.btnCancelOrConfirm.hidden = YES;
+//            break;
+//        }
+//        default:
+//            break;
+//    }
+//}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return 1;
@@ -161,12 +223,12 @@ typedef NS_ENUM(NSInteger, Status) {
 - (void)actionShowCancelStatusVC {
     
     if ((([self.value_status rangeOfString:@"KSD"].location != NSNotFound) && ([self.value_status rangeOfString:@"mất"].location == NSNotFound) && ([self.value_status rangeOfString:@"hỏng"].location == NSNotFound)) || (([self.value_status rangeOfString:@"KSD"].location == NSNotFound) && ([self.value_status rangeOfString:@"mất"].location != NSNotFound) && ([self.value_status rangeOfString:@"hỏng"].location == NSNotFound)) || (([self.value_status rangeOfString:@"KSD"].location == NSNotFound) && ([self.value_status rangeOfString:@"mất"].location == NSNotFound) && ([self.value_status rangeOfString:@"hỏng"].location != NSNotFound))) {
-        
+
         NSString *messageString1 = @"'không sử dụng'";
         NSString *messageString2 = @"'đã mất'";
         NSString *messageString3 = @"'đã hỏng'";
         NSString *message = [NSString stringWithFormat:@"Đ/c có chắc chắn muốn hủy thông báo %@ đối với tài sản này?", messageString2];
-        
+
         if ([self.value_status rangeOfString:@"KSD"].location != NSNotFound) {
             message = [NSString stringWithFormat:@"Đ/c có chắc chắn muốn hủy thông báo %@ đối với tài sản này?", messageString1];
         } else if ([self.value_status rangeOfString:@"mất"].location != NSNotFound) {
@@ -174,9 +236,9 @@ typedef NS_ENUM(NSInteger, Status) {
         } else if ([self.value_status rangeOfString:@"hỏng"].location != NSNotFound) {
             message = [NSString stringWithFormat:@"Đ/c có chắc chắn muốn hủy thông báo %@ đối với tài sản này?", messageString3];
         } else {
-            
+
         }
-        
+
         UIAlertController * alert = [UIAlertController
                                      alertControllerWithTitle:@"Xác nhận"
                                      message:message
@@ -193,11 +255,14 @@ typedef NS_ENUM(NSInteger, Status) {
                                             [[NSNotificationCenter defaultCenter]
                                              postNotificationName:@"CancelSucessNotification"
                                              object:self];
+                                            [alert dismissViewControllerAnimated:NO completion:nil];
                                             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Thông báo" message:@"Hủy thành công." delegate:self cancelButtonTitle:@"Đóng" otherButtonTitles:nil, nil];
                                             [alert show];
                                         } onError:^(NSString *Error) {
+                                            [alert dismissViewControllerAnimated:NO completion:nil];
                                             [self showAlertFailure:@"Có lỗi xảy ra. Vui lòng kiểm tra lại."];
                                         } onException:^(NSString *Exception) {
+                                            [alert dismissViewControllerAnimated:NO completion:nil];
                                             [self showAlertFailure:@"Mất kết nối mạng"];
                                         }];
                                     }];

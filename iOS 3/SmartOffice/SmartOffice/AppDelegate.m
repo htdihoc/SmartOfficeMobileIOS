@@ -57,6 +57,16 @@ static AppDelegate *sharedManager;
     return sharedManager;
 }
 
+#pragma mark - Common
++ (AppDelegate *)sharedDelegate {
+    static AppDelegate *_sharedDelegate;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        _sharedDelegate = [[UIApplication sharedApplication] delegate];
+    });
+    return _sharedDelegate;
+}
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     [IQKeyboardManager sharedManager].enable = YES;
     [IQKeyboardManager sharedManager].enableAutoToolbar = NO;

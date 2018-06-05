@@ -92,14 +92,49 @@
     self.search_view.delegate = self;
     [self countData];
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(acceptOrRefuseActionNotification:)
-                                                 name:@"AcceptOrRefuseActionNotification"
+                                             selector:@selector(acceptActionNotification:)
+                                                 name:@"AcceptActionNotification"
                                                object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(refuseActionNotification:)
+                                                 name:@"RefuseActionNotification"
+                                               object:nil];
+    
 }
 
-- (void) acceptOrRefuseActionNotification:(NSNotification *) notification
+- (void) refuseActionNotification:(NSNotification *) notification
 {
+    [self.BBBG_data_array removeAllObjects];
+    NSString *stringReason = notification.object;
+    
     [self countData];
+    // đã từ chối
+    self.height_button_view.constant = 0;
+    self.height_asset_name_view.constant = 0;
+    self.height_refuse_view.constant = 80;
+    self.statusBBBG2.text = @"Trạng thái : Bị từ chối";
+    self.reasonBBBG2.text = [NSString stringWithFormat:@"Lý do : %@", stringReason];
+    self.reasonBBBG2.hidden = NO;
+    [self.confirmBtn setTitle:@"Phê duyệt" forState:UIControlStateNormal];
+}
+
+- (void) acceptActionNotification:(NSNotification *) notification
+{
+    [self.BBBG_data_array removeAllObjects];
+    NSString *reasonString = notification.object;
+    
+    [self countData];
+
+    // đã xác nhận
+    self.height_button_view.constant = 0;
+    self.height_refuse_view.constant = 0;
+    self.height_asset_name_view.constant = 50;
+    self.refuse_view.hidden = YES;
+    self.statusBBBG2.text = @"Trạng thái : Đã xác nhận";
+    self.reasonBBBG2.text = [NSString stringWithFormat:@"Lý do : %@", reasonString];
+    self.reasonBBBG2.hidden = NO;
+    [self.confirmBtn setTitle:@"Phê duyệt" forState:UIControlStateNormal];
+    
 }
 
 - (void) countData {
@@ -313,23 +348,6 @@
 
 - (IBAction)btnRefuseAction:(id)sender {
     
-//    NSDictionary *parameter = @{
-//                                @"idBBBGTSCN": self.id_BBBG_detail,
-//                                @"type": @"2",
-//                                @"reason": myTextField.text
-//                                };
-//    [KTTSProcessor postUPDATE_IN_HAN:parameter handle:^(id result, NSString *error) {
-//        [[NSNotificationCenter defaultCenter]
-//         postNotificationName:@"AcceptOrRefuseActionNotification"
-//         object:self];
-//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Thông báo" message:@"Từ chối thành công." delegate:self cancelButtonTitle:@"Đóng" otherButtonTitles:nil, nil];
-//        [alert show];
-//    } onError:^(NSString *Error) {
-//        [self showAlertFailure:@"Có lỗi xảy ra. Vui lòng kiểm tra lại."];
-//    } onException:^(NSString *Exception) {
-//        [self showAlertFailure:@"Mất kết nối mạng"];
-//    }];
-    
     RefuseAlertView *refuseAlertView = [[[NSBundle mainBundle] loadNibNamed:@"RefuseAlertView" owner:self options:nil] objectAtIndex:0];
     refuseAlertView.id_BBBG_detail = self.id_BBBG_detail;
     refuseAlertView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
@@ -341,7 +359,7 @@
                                                                   message:@"Đ/c có chắc chắn muốn xác nhận TS này ?"
                                                            preferredStyle:UIAlertControllerStyleAlert];
     
-    UIAlertAction* yesButton = [UIAlertAction actionWithTitle:@"Gửi"
+    UIAlertAction* yesButton = [UIAlertAction actionWithTitle:@"XÁC NHẬN"
                                                         style:UIAlertActionStyleDefault
                                                       handler:^(UIAlertAction * action)
                                 {
@@ -352,10 +370,11 @@
                                                                 @"reason": self.bbbgModelAsset.description
                                                                 };
                                     [KTTSProcessor postUPDATE_IN_HAN:parameter handle:^(id result, NSString *error) {
+                                        NSString *reasonString = self.bbbgModelAsset.minuteHandOverCode;
                                         [[NSNotificationCenter defaultCenter]
-                                         postNotificationName:@"AcceptOrRefuseActionNotification"
-                                         object:self];
-                                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Thông báo" message:@"Xác nhận thành công." delegate:self cancelButtonTitle:@"Đóng" otherButtonTitles:nil, nil];
+                                         postNotificationName:@"AcceptActionNotification"
+                                         object:reasonString];
+                                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Thông báo" message:@"Xác nhận thành công." delegate:self cancelButtonTitle:@"ĐÓNG" otherButtonTitles:nil, nil];
                                         [alert show];
                                     } onError:^(NSString *Error) {
                                         [self showAlertFailure:@"Có lỗi xảy ra. Vui lòng kiểm tra lại."];

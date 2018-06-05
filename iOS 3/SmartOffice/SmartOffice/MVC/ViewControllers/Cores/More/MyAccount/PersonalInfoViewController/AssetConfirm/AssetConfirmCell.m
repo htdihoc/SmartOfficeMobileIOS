@@ -54,6 +54,14 @@
 
 #pragma mark - MKDropdownMenuDataSource
 
+- (void)dropdownMenu:(MKDropdownMenu *)dropdownMenu didOpenComponent:(NSInteger)component{
+    [self.delegate sendShowDropDown];
+}
+
+- (void)dropdownMenu:(MKDropdownMenu *)dropdownMenu didCloseComponent:(NSInteger)component{
+    [self.delegate sendCloseDropDown];
+}
+
 - (NSInteger)numberOfComponentsInDropdownMenu:(MKDropdownMenu *)dropdownMenu {
     return 1;
 }
@@ -137,9 +145,9 @@
     _date = timeInMiliseconds;
 }
 
-- (void)itemSelected:(NSInteger)index {
-    _type = index + 1;
-}
+//- (void)itemSelected:(NSInteger)index {
+//    _type = index + 1;
+//}
 
 - (void) setUserInterfaceObject: (UIView *)object {
     object.layer.borderWidth = 0.5;
