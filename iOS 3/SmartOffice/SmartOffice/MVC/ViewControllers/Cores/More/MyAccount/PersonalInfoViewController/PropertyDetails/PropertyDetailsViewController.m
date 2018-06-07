@@ -12,6 +12,7 @@
 #import "KTTSProcessor.h"
 #import "KTTS_CancelStatus_VC_iPad.h"
 #import "MZFormSheetController.h"
+#import "SOSessionManager.h"
 
 typedef NS_ENUM(NSInteger, Status) {
     isCancelStatus = 0,     // xác nhận
@@ -51,6 +52,7 @@ typedef NS_ENUM(NSInteger, Status) {
         self.hightBtnConfirm.constant = 0;
     }
     self.isColorButtonCopy = self.isColorButton;
+
     switch (self.isColorButton) {
         case isCancelStatus: {
             [self setColorCancel];
@@ -71,6 +73,8 @@ typedef NS_ENUM(NSInteger, Status) {
     self.propertyDetailsTableView.estimatedRowHeight = 445;
     self.propertyDetailsTableView.rowHeight = UITableViewAutomaticDimension;
     
+    [SOSessionManager sharedSession].statusInt = [self.value_status componentsSeparatedByString:@";"].count;
+    
     dispatch_async(dispatch_get_main_queue(), ^{
         if ([self.value_status rangeOfString:@"KSD"].location != NSNotFound) {
             self.typeCancel = 3;
@@ -83,69 +87,156 @@ typedef NS_ENUM(NSInteger, Status) {
         }
     });
     
-//    [[NSNotificationCenter defaultCenter] addObserver:self
-//                                             selector:@selector(confirmSucessNotification:)
-//                                                 name:@"ConfirmSucessNotification"
-//                                               object:nil];
-//    [[NSNotificationCenter defaultCenter] addObserver:self
-//                                             selector:@selector(cancelSucessNotification:)
-//                                                 name:@"CancelSucessNotification"
-//                                               object:nil];
+    [SOSessionManager sharedSession].value_status = self.value_status;
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(confirmSucessNotification:)
+                                                 name:@"ConfirmSucessNotification"
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(cancelSucessNotification:)
+                                                 name:@"CancelSucessNotification"
+                                               object:nil];
     
 }
 
-//- (void) confirmSucessNotification:(NSNotification *) notification
-//{
-////    isCancelStatus = 0,     // xác nhận
-////    isConfirmStatus = 1,    // hủy
-////    isAllStatus = 2         // xác nhận và hủy
-//
-//
-//    if(self.isColorButton == 0){
-//        self.isColorButton = 2;
-//    }else if(self.isColorButton == 2){
-//        self.isColorButton = 2;
-//    }
-//
-//        switch (self.isColorButton) {
-//            case isCancelStatus: {
-//                [self setColorCancel];
-//            }
-//                break;
-//            case isConfirmStatus: {
-//                [self setColorConfirm];
-//            }
-//                break;
-//            case isAllStatus: {
-//                self.btnCancelOrConfirm.hidden = YES;
-//                break;
-//            }
-//            default:
-//                break;
-//        }
-//
-//}
-//
-//- (void) cancelSucessNotification:(NSNotification *) notification
-//{
-//
-//    switch (self.isColorButton) {
-//        case isCancelStatus: {
-//            [self setColorCancel];
-//        }
-//            break;
-//        case isConfirmStatus: {
-//            [self setColorConfirm];
-//        }
-//            break;
-//        case isAllStatus: {
-//            self.btnCancelOrConfirm.hidden = YES;
-//            break;
-//        }
-//        default:
-//            break;
-//    }
-//}
+- (void) confirmSucessNotification:(NSNotification *) notification
+{
+//    isCancelStatus = 0,     // xác nhận
+//    isConfirmStatus = 1,    // hủy
+//    isAllStatus = 2         // xác nhận và hủy
+//    Đã báo mất: 1; Đã báo hỏng: 1; Đã báo KSD: 1;
+//    Báo mất", @"Báo hỏng", @"Báo không sử dụng
+    NSInteger typeStatus = [notification.object integerValue];
+    if(typeStatus == 1){
+        //Báo mất
+        if ([[SOSessionManager sharedSession].value_status rangeOfString:@"mất"].location == NSNotFound) {
+            [SOSessionManager sharedSession].value_status = [NSString stringWithFormat:@"%@ Đã báo mất: 1;", [SOSessionManager sharedSession].value_status];
+            [SOSessionManager sharedSession].statusInt = [SOSessionManager sharedSession].statusInt + 1;
+        }
+    }else if(typeStatus == 2){
+        //Báo hỏng
+        if ([[SOSessionManager sharedSession].value_status rangeOfString:@"hỏng"].location == NSNotFound) {
+            [SOSessionManager sharedSession].value_status = [NSString stringWithFormat:@"%@ Đã báo hỏng: 1;", [SOSessionManager sharedSession].value_status];
+            [SOSessionManager sharedSession].statusInt = [SOSessionManager sharedSession].statusInt + 1;
+        }
+    }else {
+        //Báo không sử dụng
+        if ([[SOSessionManager sharedSession].value_status rangeOfString:@"KSD"].location == NSNotFound) {
+            [SOSessionManager sharedSession].value_status = [NSString stringWithFormat:@"%@ Đã báo KSD: 1;", [SOSessionManager sharedSession].value_status];
+            [SOSessionManager sharedSession].statusInt = [SOSessionManager sharedSession].statusInt + 1;
+        }
+    }
+    self.value_status = [SOSessionManager sharedSession].value_status;
+    switch ([SOSessionManager sharedSession].statusInt) {
+        case 0:
+            self.isColorButton = 1;
+            break;
+        case 4:
+            self.isColorButton = 0;
+            break;
+        default:
+            self.isColorButton = 2;
+            break;
+    }
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if ([self.value_status rangeOfString:@"KSD"].location != NSNotFound) {
+            self.typeCancel = 3;
+        } else if ([self.value_status rangeOfString:@"mất"].location != NSNotFound) {
+            self.typeCancel = 1;
+        } else if ([self.value_status rangeOfString:@"hỏng"].location != NSNotFound) {
+            self.typeCancel = 2;
+        } else {
+            self.typeCancel = 0;
+        }
+    });
+    switch (self.isColorButton) {
+        case isCancelStatus: {
+            [self setColorCancel];
+        }
+            break;
+        case isConfirmStatus: {
+            [self setColorConfirm];
+        }
+            break;
+        case isAllStatus: {
+            self.btnCancelOrConfirm.hidden = YES;
+            break;
+        }
+        default:
+            break;
+    }
+
+}
+
+- (void) cancelSucessNotification:(NSNotification *) notification
+{
+    NSInteger typeStatus = [notification.object integerValue];
+    if(typeStatus == 1){
+        //Báo mất
+        if ([[SOSessionManager sharedSession].value_status rangeOfString:@"mất"].location != NSNotFound) {
+            [SOSessionManager sharedSession].value_status = [[SOSessionManager sharedSession].value_status
+                                 stringByReplacingOccurrencesOfString:@"mất" withString:@""];
+//            self.value_status = [self.value_status
+//                                 stringByReplacingOccurrencesOfString:@";" withString:@""];
+            [SOSessionManager sharedSession].value_status = [[SOSessionManager sharedSession].value_status substringToIndex:[[SOSessionManager sharedSession].value_status length]-1];
+
+        }
+    }else if(typeStatus == 2){
+        //Báo hỏng
+        if ([[SOSessionManager sharedSession].value_status rangeOfString:@"hỏng"].location != NSNotFound) {
+            [SOSessionManager sharedSession].value_status = [[SOSessionManager sharedSession].value_status
+                                 stringByReplacingOccurrencesOfString:@"hỏng" withString:@""];
+            [SOSessionManager sharedSession].value_status = [[SOSessionManager sharedSession].value_status substringToIndex:[[SOSessionManager sharedSession].value_status length]-1];
+        }
+    }else {
+        //Báo không sử dụng
+        if ([[SOSessionManager sharedSession].value_status rangeOfString:@"KSD"].location != NSNotFound) {
+            [SOSessionManager sharedSession].value_status = [[SOSessionManager sharedSession].value_status
+                                 stringByReplacingOccurrencesOfString:@"KSD" withString:@""];
+            [SOSessionManager sharedSession].value_status = [[SOSessionManager sharedSession].value_status substringToIndex:[[SOSessionManager sharedSession].value_status length]-1];
+        }
+    }
+    self.value_status = [SOSessionManager sharedSession].value_status;
+    switch ([self.value_status componentsSeparatedByString:@";"].count) {
+        case 0:
+            self.isColorButton = 1;
+            break;
+        case 4:
+            self.isColorButton = 0;
+            break;
+        default:
+            self.isColorButton = 2;
+            break;
+    }
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if ([self.value_status rangeOfString:@"KSD"].location != NSNotFound) {
+            self.typeCancel = 3;
+        } else if ([self.value_status rangeOfString:@"mất"].location != NSNotFound) {
+            self.typeCancel = 1;
+        } else if ([self.value_status rangeOfString:@"hỏng"].location != NSNotFound) {
+            self.typeCancel = 2;
+        } else {
+            self.typeCancel = 0;
+        }
+    });
+    switch (self.isColorButton) {
+        case isCancelStatus: {
+            [self setColorCancel];
+        }
+            break;
+        case isConfirmStatus: {
+            [self setColorConfirm];
+        }
+            break;
+        case isAllStatus: {
+            self.btnCancelOrConfirm.hidden = YES;
+            break;
+        }
+        default:
+            break;
+    }
+}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return 1;
@@ -254,7 +345,7 @@ typedef NS_ENUM(NSInteger, Status) {
                                         [KTTSProcessor postKTTS_CANCEL_TTTS:parameter handle:^(id result, NSString *error) {
                                             [[NSNotificationCenter defaultCenter]
                                              postNotificationName:@"CancelSucessNotification"
-                                             object:self];
+                                             object:IntToString(self.typeCancel)];
                                             [alert dismissViewControllerAnimated:NO completion:nil];
                                             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Thông báo" message:@"Hủy thành công." delegate:self cancelButtonTitle:@"Đóng" otherButtonTitles:nil, nil];
                                             [alert show];

@@ -18,6 +18,8 @@
 @property (strong, nonatomic) VOfficeSessionModel *vofficeSession;
 @property (strong, nonatomic) TTNSSessionModel *ttnsSession;
 
+@property (strong, nonatomic) NSString *value_status;
+@property (assign, nonatomic) NSInteger statusInt;
 
 //Singleton
 + (instancetype)sharedSession;

@@ -200,7 +200,7 @@
         [self hideCustomHUB];
         [[NSNotificationCenter defaultCenter]
          postNotificationName:@"ConfirmSucessNotification"
-         object:self];
+         object:IntToString(assetConfirmCell.typeIntDropDown + 1)];
         [self didTapBackButton];
         if (self.delegate) {
             [self.delegate successAssetConfirmVC];

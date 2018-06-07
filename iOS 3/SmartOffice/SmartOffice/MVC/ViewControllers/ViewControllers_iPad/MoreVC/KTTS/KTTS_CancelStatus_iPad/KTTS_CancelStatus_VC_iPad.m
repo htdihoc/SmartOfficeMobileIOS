@@ -172,7 +172,7 @@
                                          [KTTSProcessor postKTTS_CANCEL_TTTS:parameter handle:^(id result, NSString *error) {
                                              [[NSNotificationCenter defaultCenter]
                                               postNotificationName:@"CancelSucessNotification"
-                                              object:self];
+                                              object:IntToString(self.typeCancel)];
                                              [alert dismissViewControllerAnimated:NO completion:nil];
                                              UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Thông báo" message:@"Hủy thành công." delegate:self cancelButtonTitle:@"Đóng" otherButtonTitles:nil, nil];
                                              [alert show];
